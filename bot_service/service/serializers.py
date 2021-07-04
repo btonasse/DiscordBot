@@ -1,15 +1,36 @@
 from rest_framework import serializers
 from .models import Player, BoardGame, Result, Match
 
+import requests
+from xml.etree import ElementTree
+
 class PlayerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Player
         fields = '__all__'
 
 class BoardGameSerializer(serializers.ModelSerializer):
+    bgg_id = serializers.IntegerField(read_only=True, required=False)
+    bgg_link = serializers.URLField(read_only=True, required=False)
     class Meta:
         model = BoardGame
         fields = '__all__'
+
+    def get_bgg_link(self, id):
+        return f'https://boardgamegeek.com/boardgame/{id}'
+
+    def get_bgg_id(self, name):
+        resp = requests.get(f'https://boardgamegeek.com/xmlapi2/search?query={name}&type=boardgame&exact=1')
+        if resp.ok:
+            tree = ElementTree.fromstring(resp.content)
+            return tree[0].attrib['id']
+    
+    def create(self, validated_data):
+        validated_data['bgg_id'] = self.get_bgg_id(validated_data['name'])
+        validated_data['bgg_link'] = self.get_bgg_link(validated_data['bgg_id'])
+        bg = BoardGame.objects.create(**validated_data)
+        return bg
+        
 
 class ResultSerializer(serializers.ModelSerializer):
     player = serializers.SlugRelatedField(queryset=Player.objects.all(), slug_field='name')

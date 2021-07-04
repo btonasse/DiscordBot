@@ -11,8 +11,8 @@ class Player(models.Model):
 
 class BoardGame(models.Model):
     name = models.CharField(max_length=30)
-    #author = models.ManyToManyField() todo
     bgg_id = models.IntegerField(unique=True)
+    bgg_link = models.URLField(unique=True)
     more_points_win = models.BooleanField(default=True)
 
     def __str__(self):
