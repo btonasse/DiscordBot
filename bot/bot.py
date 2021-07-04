@@ -24,7 +24,7 @@ class MyBot(commands.Bot):
 
     @commands.command(name='hello', help='Just say hi.')
     async def hello(ctx):
-        await ctx.send(f'Hello {ctx.author}')
+        await ctx.send(f"Hello {ctx.author.name}")
 
 
 if __name__ == '__main__':
