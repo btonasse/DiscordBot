@@ -5,12 +5,21 @@ from rest_framework import status
 from .models import Player, BoardGame, Match, Result
 from .serializers import PlayerSerializer
 
+from django.shortcuts import redirect
+
 @api_view(['GET', 'POST'])
 def players(request):
     if request.method == 'GET':
-        all_players = Player.objects.all()
-        serializer = PlayerSerializer(all_players, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        if not request.data.get('handle'):
+            all_players = Player.objects.all()
+            serializer = PlayerSerializer(all_players, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            try:
+                player = Player.objects.get(handle=request.data['handle'])
+                return redirect('player', id=player.id)
+            except Player.DoesNotExist:
+                return Response(status=status.HTTP_404_NOT_FOUND)
     
     else:
         serializer = PlayerSerializer(data=request.data)
