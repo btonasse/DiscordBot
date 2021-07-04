@@ -2,11 +2,22 @@ import os
 import discord
 
 TOKEN = os.getenv('DISCORD_TOKEN')
+SERVER = os.getenv('DISCORD_SERVER')
 
-client = discord.Client()
+class MyClient(discord.Client):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.my_guild = None
+    
+    async def on_ready(self):
+        guild = discord.utils.get(self.guilds, name=SERVER)
+        self.my_server = guild
 
-@client.event
-async def on_ready():
-    print(f'{client.user} has connected to Discord!')
+        print(
+            f'{self.user} has connected to the following server:\n'
+            f'{guild.name} - id: {guild.id}'
+        )
 
+
+client = MyClient()
 client.run(TOKEN)
