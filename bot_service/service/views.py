@@ -16,7 +16,7 @@ def players(request):
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             try:
-                player = Player.objects.get(handle=request.data['handle'])
+                player = Player.objects.get(handle__iexact=request.data['handle'])
                 return redirect('player', id=player.id)
             except Player.DoesNotExist:
                 return Response(status=status.HTTP_404_NOT_FOUND)
@@ -63,7 +63,7 @@ def board_games(request):
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             try:
-                bg = BoardGame.objects.get(**request.data)
+                bg = BoardGame.objects.get(name__iexact=request.data['name'])
                 return redirect('board_game', id=bg.id)
             except BoardGame.DoesNotExist:
                 return Response(status=status.HTTP_404_NOT_FOUND)

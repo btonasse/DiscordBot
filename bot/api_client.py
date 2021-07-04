@@ -18,8 +18,15 @@ class ApiClient():
         except ValueError:
             return resp.status_code
 
+    def get_board_game_link(self, name):
+        resp = requests.get(f'{ROOT}/board_games', data={'name': name})
+        try:
+            result = resp.json()
+            return result['bgg_link']
+        except ValueError:
+            return resp.status_code
+
 
 
 if __name__ == '__main__':
     client = ApiClient()
-    client.get_all_players()

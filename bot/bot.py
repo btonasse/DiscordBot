@@ -13,6 +13,7 @@ class MyBot(commands.Bot):
         self.my_server = None
         self.add_command(self.hello)
         self.add_command(self.get_player_details)
+        self.add_command(self.board_game_link)
         
 
     async def on_ready(self):
@@ -41,6 +42,16 @@ class MyBot(commands.Bot):
             attr_list = [f'{k}: {v}' for k, v in resp.items()]
             msg = f"Details for **{handle}**:\n"
             msg += '```' + '\n'.join(attr_list) + '```'
+        await ctx.send(msg)
+
+    @commands.command(name='bg', help='Get BGG link of a board game.')
+    async def board_game_link(ctx, name):
+        resp = api.get_board_game_link(name)
+        if resp == 404:
+            msg = f"The game **{name}** does not exist in the DB."
+        else:
+            msg = f"Link for **{name}** is:\n"
+            msg += resp
         await ctx.send(msg)
 
 
