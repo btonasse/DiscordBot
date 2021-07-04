@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from bot_service.service.models import Player, BoardGame, Result, Match
+from .models import Player, BoardGame, Result, Match
 
 class PlayerSerializer(serializers.ModelSerializer):
     class Meta:
