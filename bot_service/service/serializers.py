@@ -47,8 +47,6 @@ class BoardGameSerializer(serializers.ModelSerializer):
         else:
             raise serializers.ValidationError(f"Could not connect to BGG.")
             
-    
-
     def create(self, validated_data):
         validated_data['bgg_id'] = self.get_bgg_id(validated_data['name'])
         validated_data['bgg_link'] = self.get_bgg_link(validated_data['bgg_id'])
@@ -57,12 +55,14 @@ class BoardGameSerializer(serializers.ModelSerializer):
         
 
 class ResultSerializer(serializers.ModelSerializer):
-    player = serializers.SlugRelatedField(queryset=Player.objects.all(), slug_field='name')
+    player = serializers.SlugRelatedField(queryset=Player.objects.all(), slug_field='handle')
+    match = serializers.PrimaryKeyRelatedField(read_only=True)
     class Meta:
         model = Result
         fields = '__all__'
 
 class MatchSerializer(serializers.ModelSerializer):
+    game = serializers.SlugRelatedField(queryset=BoardGame.objects.all(), slug_field='name')
     results = ResultSerializer(many=True)
     class Meta:
         model = Match
@@ -77,29 +77,29 @@ class MatchSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         results_data = validated_data.pop('results', [])
-
-        instance.game_id = validated_data.get('game', instance.game)
+        instance.game = validated_data.get('game', instance.game)
         instance.date    = validated_data.get('date', instance.date)
         instance.save()
 
         current_results = Result.objects.filter(match=instance)
-        new_result_ids  = [result_data.get('id') for result_data in results_data]
-        
+        new_result_players  = [result_data.get('player') for result_data in results_data]
+
         for result in current_results:
-            if result.id not in new_result_ids:
-                instance.results.remove(result)
+            print(result.player, new_result_players)
+            if result.player not in new_result_players:
+                result.delete()
         
         for new_result_data in results_data:
-            new_serializer = ResultSerializer(data=new_result_data)
-            if new_serializer.is_valid(raise_exception=True):
-                id_to_update = new_result_data.get('id')
-                if not id_to_update:
-                    new_serializer.create(validated_data=new_result_data)
-                else:
-                    result_to_update = current_results.get(id=id_to_update)
-                    new_serializer.update(result_to_update, validated_data=new_result_data)
+            res_serializer = ResultSerializer(data=new_result_data)
+            if res_serializer.is_valid(raise_exception=True):
+                player_to_update = new_result_data.get('player')
+                try:
+                    result_to_update = current_results.get(player=player_to_update)
+                    res_serializer.update(result_to_update, validated_data=new_result_data)
+                except Result.DoesNotExist:
+                    Result.objects.create(match=instance, **new_result_data)
         
-        return MatchSerializer(instance)
+        return instance
 
                 
 

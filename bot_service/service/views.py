@@ -3,7 +3,7 @@ from rest_framework import generics
 from django.shortcuts import get_object_or_404
 
 from .models import Player, BoardGame, Match, Result
-from .serializers import PlayerSerializer, BoardGameSerializer
+from .serializers import MatchSerializer, PlayerSerializer, BoardGameSerializer
 
 class BaseListOrRetrieve(generics.ListCreateAPIView, generics.RetrieveAPIView):
     def get_object(self):
@@ -39,5 +39,14 @@ class BoardGamesView(BaseListOrRetrieve):
 class BoardGameView(generics.RetrieveDestroyAPIView):
     queryset = BoardGame.objects.all()
     serializer_class = BoardGameSerializer
-    lookup_field = 'id'
+    lookup_field = 'name'
 
+class MatchesView(BaseListOrRetrieve):
+    queryset = Match.objects.all()
+    serializer_class = MatchSerializer
+    lookup_fields = ['game', 'date']
+
+class MatchView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Match.objects.all()
+    serializer_class = MatchSerializer
+    lookup_field = 'id'

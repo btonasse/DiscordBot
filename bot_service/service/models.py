@@ -7,7 +7,7 @@ class Player(models.Model):
     discord_id = models.IntegerField(unique=True)
 
     def __str__(self):
-        return self.name
+        return self.handle
 
 class BoardGame(models.Model):
     name = models.CharField(max_length=30, unique=True)
