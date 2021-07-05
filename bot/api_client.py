@@ -13,18 +13,19 @@ class ApiClient():
 
     def get_player(self, handle):
         resp = requests.get(f'{ROOT}/players', data={'handle': handle})
-        try:
-            return resp.json()
-        except ValueError:
+        if resp.status_code == 404:
             return resp.status_code
+        else:
+            return resp.json()
+            
 
     def get_board_game_link(self, name):
         resp = requests.get(f'{ROOT}/board_games', data={'name': name})
-        try:
+        if resp.status_code == 404:
+            return resp.status_code
+        else:
             result = resp.json()
             return result['bgg_link']
-        except ValueError:
-            return resp.status_code
 
 
 
