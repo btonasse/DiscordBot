@@ -24,7 +24,6 @@ class BoardGameSerializer(serializers.ModelSerializer):
         Converts input to ASCII to avoid duplicate (Bärenpark vs Barenpark) slipping through validation.
         '''
         as_ascii = utils.str_as_ascii(value)
-        print(as_ascii)
         try:
             if BoardGame.objects.get(name=as_ascii):
                 raise ValidationError(f'A BoardGame with name {as_ascii} already exists.')
@@ -40,12 +39,11 @@ class BoardGameSerializer(serializers.ModelSerializer):
         resp = requests.get(f'https://boardgamegeek.com/xmlapi2/search?query={name}&type=boardgame')
         if resp.ok:
             tree = ElementTree.fromstring(resp.content)
-            if len(tree) == 0:
-                raise serializers.ValidationError(f"No game found on BGG with name: {name}")
             for child in tree:
                 resp_as_ascii = utils.str_as_ascii(child[0].attrib['value'])
                 if resp_as_ascii == name:
                     return child.attrib['id']
+            raise serializers.ValidationError(f"No game found on BGG with name: {name}. Found {len(tree)} similar games.")
         else:
             raise serializers.ValidationError(f"Could not connect to BGG.")
             
