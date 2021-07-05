@@ -10,13 +10,14 @@ from django.shortcuts import redirect
 @api_view(['GET', 'POST'])
 def players(request):
     if request.method == 'GET':
-        if not request.data.get('handle'):
+        if not request.data:
             all_players = Player.objects.all()
             serializer = PlayerSerializer(all_players, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             try:
-                player = Player.objects.get(handle__iexact=request.data['handle'])
+                params = data_as_dict(request.data)
+                player = Player.objects.get(**params)
                 return redirect('player', id=player.id)
             except Player.DoesNotExist:
                 return Response(status=status.HTTP_404_NOT_FOUND)
@@ -52,7 +53,11 @@ def player(request, id: int):
         player.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-
+def data_as_dict(request_data):
+    dic = {}
+    for k, v in request_data.items():
+        dic[k] = v
+    return dic
 
 @api_view(['GET', 'POST'])
 def board_games(request):
@@ -63,7 +68,8 @@ def board_games(request):
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             try:
-                bg = BoardGame.objects.get(name__iexact=request.data['name'])
+                params = data_as_dict(request.data)
+                bg = BoardGame.objects.get(**params)
                 return redirect('board_game', id=bg.id)
             except BoardGame.DoesNotExist:
                 return Response(status=status.HTTP_404_NOT_FOUND)
