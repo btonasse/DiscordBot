@@ -5,6 +5,8 @@ from .models import Player, BoardGame, Result, Match
 import requests
 from xml.etree import ElementTree
 
+from . import utils
+
 class PlayerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Player
@@ -17,18 +19,38 @@ class BoardGameSerializer(serializers.ModelSerializer):
         model = BoardGame
         fields = '__all__'
 
+    def validate_name(self, value):
+        '''
+        Converts input to ASCII to avoid duplicate (Bärenpark vs Barenpark) slipping through validation.
+        '''
+        as_ascii = utils.str_as_ascii(value)
+        print(as_ascii)
+        try:
+            if BoardGame.objects.get(name=as_ascii):
+                raise ValidationError(f'A BoardGame with name {as_ascii} already exists.')
+        except BoardGame.DoesNotExist:
+            pass
+        return as_ascii
+
+    
     def get_bgg_link(self, id):
         return f'https://boardgamegeek.com/boardgame/{id}'
 
     def get_bgg_id(self, name):
-        resp = requests.get(f'https://boardgamegeek.com/xmlapi2/search?query={name}&type=boardgame&exact=1')
+        resp = requests.get(f'https://boardgamegeek.com/xmlapi2/search?query={name}&type=boardgame')
         if resp.ok:
-            try:
-                tree = ElementTree.fromstring(resp.content)
-                return tree[0].attrib['id']
-            except IndexError: #BGG returns a 200 even when game is not found
+            tree = ElementTree.fromstring(resp.content)
+            if len(tree) == 0:
                 raise serializers.ValidationError(f"No game found on BGG with name: {name}")
+            for child in tree:
+                resp_as_ascii = utils.str_as_ascii(child[0].attrib['value'])
+                if resp_as_ascii == name:
+                    return child.attrib['id']
+        else:
+            raise serializers.ValidationError(f"Could not connect to BGG.")
+            
     
+
     def create(self, validated_data):
         validated_data['bgg_id'] = self.get_bgg_id(validated_data['name'])
         validated_data['bgg_link'] = self.get_bgg_link(validated_data['bgg_id'])

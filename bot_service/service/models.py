@@ -10,7 +10,7 @@ class Player(models.Model):
         return self.name
 
 class BoardGame(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=30, unique=True)
     bgg_id = models.IntegerField(unique=True)
     bgg_link = models.URLField(unique=True)
     more_points_win = models.BooleanField(default=True)
