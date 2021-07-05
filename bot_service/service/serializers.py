@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from rest_framework import serializers
 from .models import Player, BoardGame, Result, Match
 
@@ -22,8 +23,11 @@ class BoardGameSerializer(serializers.ModelSerializer):
     def get_bgg_id(self, name):
         resp = requests.get(f'https://boardgamegeek.com/xmlapi2/search?query={name}&type=boardgame&exact=1')
         if resp.ok:
-            tree = ElementTree.fromstring(resp.content)
-            return tree[0].attrib['id']
+            try:
+                tree = ElementTree.fromstring(resp.content)
+                return tree[0].attrib['id']
+            except IndexError: #BGG returns a 200 even when game is not found
+                raise serializers.ValidationError(f"No game found on BGG with name: {name}")
     
     def create(self, validated_data):
         validated_data['bgg_id'] = self.get_bgg_id(validated_data['name'])
