@@ -45,7 +45,8 @@ class MyBot(commands.Bot):
         await ctx.send(msg)
 
     @commands.command(name='bg', help='Get BGG link of a board game.')
-    async def board_game_link(ctx, name):
+    async def board_game_link(ctx, *args):
+        name = ' '.join([arg for arg in args])
         resp = api.get_board_game_link(name)
         if resp == 404:
             msg = f"The game **{name}** does not exist in the DB."
