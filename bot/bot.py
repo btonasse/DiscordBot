@@ -2,6 +2,7 @@ import os
 import discord
 from discord.ext import commands
 from api_client import ApiClient # type: ignore
+import json
 
 TOKEN = os.getenv('DISCORD_TOKEN')
 SERVER = os.getenv('DISCORD_SERVER')
@@ -14,6 +15,7 @@ class MyBot(commands.Bot):
         self.add_command(self.hello)
         self.add_command(self.get_player_details)
         self.add_command(self.board_game_link)
+        self.add_command(self.create_match)
         
 
     async def on_ready(self):
@@ -39,9 +41,8 @@ class MyBot(commands.Bot):
         if resp == 404:
             msg = f"The player **{handle}** does not exist in the DB."
         else:
-            attr_list = [f'{k}: {v}' for k, v in resp.items()]
             msg = f"Details for **{handle}**:\n"
-            msg += '```' + '\n'.join(attr_list) + '```'
+            msg += to_comment_block(resp)
         await ctx.send(msg)
 
     @commands.command(name='bg', help='Get BGG link of a board game.')
@@ -55,7 +56,54 @@ class MyBot(commands.Bot):
             msg += resp
         await ctx.send(msg)
 
+    @commands.command(name='new_match', help='Create a match with results per player.')
+    async def create_match(ctx, game, date, *results):
+        results_list = []
+        for res in results:
+            as_list = res.split(' ')
+            new_dict = {'player': as_list[0], 'points': as_list[1]}
+            results_list.append(new_dict)
+        data_to_post = {
+            'game': game,
+            'date': date,
+            'results': results_list
+        }
+        resp = api.create_match(data=data_to_post)
+        msg = to_comment_block(resp)
+        await ctx.send(msg)
+            
 
+def to_comment_block(orig_dict):
+    '''
+    Takes a an object from a request response and turns it into a comment block
+    '''
+    indented_str = json.dumps(orig_dict, indent=2)
+    as_list = indented_str.split('\n')
+    new_lines = []
+    for line in as_list:
+        if line[-1] in [',', '{', '}', '[', ']']:
+            new_line = line[:-1]
+            if len(new_line.strip()) >= 2: # Only adds lines back that have actual content
+                new_lines.append(new_line)
+            if len(new_line.strip()) == 0:
+                new_lines.append('') # Get separation between nested records
+        else:
+            new_lines.append(line)
+    new_string = '\n'.join(new_lines).strip()
+    new_string = new_string.replace('"', '') # Get rid of quotes
+    as_comment = '```' + new_string + '```'
+    return as_comment
+
+
+
+    
+
+    
+
+
+        
+        
+        
 
 
 if __name__ == '__main__':

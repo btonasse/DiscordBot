@@ -56,10 +56,10 @@ class BoardGameSerializer(serializers.ModelSerializer):
 
 class ResultSerializer(serializers.ModelSerializer):
     player = serializers.SlugRelatedField(queryset=Player.objects.all(), slug_field='handle')
-    match = serializers.PrimaryKeyRelatedField(read_only=True)
+    #match = serializers.PrimaryKeyRelatedField(read_only=True)
     class Meta:
         model = Result
-        fields = '__all__'
+        exclude = ['id', 'match']
 
 class MatchSerializer(serializers.ModelSerializer):
     game = serializers.SlugRelatedField(queryset=BoardGame.objects.all(), slug_field='name')

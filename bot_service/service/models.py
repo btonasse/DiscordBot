@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import datetime
+from django.utils import timezone
 
 class Player(models.Model):
     handle = models.CharField(max_length=30)
@@ -19,7 +20,7 @@ class BoardGame(models.Model):
         return self.name
 class Match(models.Model):
     game = models.ForeignKey(BoardGame, on_delete=models.CASCADE)
-    date = models.DateField(auto_now=True)
+    date = models.DateField(default=timezone.now)
     
     def __str__(self):
         return f"{self.game.name} {self.game.id} - {datetime.strftime(self.date, '%Y-%m-%d')}"

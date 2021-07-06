@@ -17,7 +17,6 @@ class ApiClient():
             return resp.status_code
         else:
             return resp.json()
-            
 
     def get_board_game_link(self, name):
         resp = requests.get(f'{ROOT}/board_games', data={'name': name})
@@ -26,6 +25,10 @@ class ApiClient():
         else:
             result = resp.json()
             return result['bgg_link']
+
+    def create_match(self, data):
+        resp = requests.post(f'{ROOT}/matches?format=json', json=data)
+        return resp.json()
 
 
 
