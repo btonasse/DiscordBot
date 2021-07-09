@@ -1,0 +1,23 @@
+{
+  "autorun": false,
+  "terminals": [
+    {
+      "name": "bot",
+      "description": "Discord bot",
+      "commands": [
+        "deactivate",
+        "pipenv run python -m bot"
+      ]
+    },
+    {
+      "name": "srv",
+      "focus": true,
+      "cwd": "./bot_service",
+      "execute": true,
+      "commands": [
+        "deactivate",
+        "pipenv run manage.py runserver"
+      ]
+    }
+  ]
+}
