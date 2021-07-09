@@ -1,7 +1,7 @@
 import os
 import discord
 from discord.ext import commands
-from api_client import ApiClient # type: ignore
+from bot.api_client import ApiClient 
 import json
 
 TOKEN = os.getenv('DISCORD_TOKEN')
