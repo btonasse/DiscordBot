@@ -51,3 +51,5 @@ venv.bak/
 
 # Databases
 *.sqlite3
+
+Pipfile.lock
