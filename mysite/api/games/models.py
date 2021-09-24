@@ -91,19 +91,21 @@ class Character(models.Model):
     visited_locations = models.ManyToManyField(Location, through='CharacterLocation')
 
     def __str__(self):
-        return f"{self.id}: {self.name} - {self.difficulty}{self.klass}"
+        return f"{self.id}: {self.name} - {self.difficulty}{self.klass.code}"
 
 # 'Through' models ######################################################
 
 class CharacterEquipment(models.Model):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
-    slot = models.IntegerField()
+    slot = models.IntegerField(blank=True)
     rarity = models.CharField(max_length=3)
     perks = models.ManyToManyField(Perk, through='EquipmentPerk', blank=True)
     class Meta:
         order_with_respect_to = 'character'
         unique_together = [['character', 'slot']]
+    def __str__(self):
+        return f"Char {self.character.id}: {self.rarity} {self.equipment.name}"
 
 class EquipmentPerk(models.Model):
     class PerkSource(models.TextChoices):
@@ -128,6 +130,8 @@ class CharacterTrait(models.Model):
     class Meta:
         order_with_respect_to = 'character'
         unique_together = [['character', 'order'], ['character', 'trait', 'level']]
+    def __str__(self):
+        return f"Char {self.character.id}: {self.order} - {self.trait.name} {self.level}"
 
 class CharacterKill(models.Model):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
