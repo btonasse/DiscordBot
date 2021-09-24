@@ -98,7 +98,7 @@ class Character(models.Model):
 class CharacterEquipment(models.Model):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
-    slot = models.IntegerField(blank=True)
+    slot = models.IntegerField(blank=True, default=None, null=True)
     rarity = models.CharField(max_length=3)
     perks = models.ManyToManyField(Perk, through='EquipmentPerk', blank=True)
     class Meta:
