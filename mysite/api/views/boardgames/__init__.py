@@ -2,8 +2,8 @@ from rest_framework import generics
 
 from django.shortcuts import get_object_or_404
 
-from .models import Player, BoardGame, Match, Result
-from .serializers import MatchSerializer, PlayerSerializer, BoardGameSerializer
+from api.models.boardgames import Player, BoardGame, Match, Result
+from api.serializers.boardgames import MatchSerializer, PlayerSerializer, BoardGameSerializer
 
 class BaseListOrRetrieve(generics.ListCreateAPIView, generics.RetrieveAPIView):
     def get_object(self):

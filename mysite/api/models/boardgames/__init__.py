@@ -18,6 +18,7 @@ class BoardGame(models.Model):
 
     def __str__(self):
         return self.name
+        
 class Match(models.Model):
     game = models.ForeignKey(BoardGame, on_delete=models.CASCADE)
     date = models.DateField(default=timezone.now)
