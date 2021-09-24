@@ -1,11 +1,11 @@
 from django.core.exceptions import ValidationError
 from rest_framework import serializers
-from api.models.boardgames import Player, BoardGame, Result, Match
+from api.boardgames.models import Player, BoardGame, Result, Match
 
 import requests
 from xml.etree import ElementTree
 
-import api.utils as utils
+import api.boardgames.utils as utils
 
 class PlayerSerializer(serializers.ModelSerializer):
     class Meta:
