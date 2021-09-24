@@ -105,7 +105,9 @@ class CharacterEquipment(models.Model):
         order_with_respect_to = 'character'
         unique_together = [['character', 'slot']]
     def __str__(self):
-        return f"Char {self.character.id}: {self.rarity+' '}{self.equipment.name}"
+        if self.rarity:
+            return f"Char {self.character.id}: {self.rarity} {self.equipment.name}"
+        return f"Char {self.character.id}: {self.equipment.name}"
 
 class EquipmentPerk(models.Model):
     class PerkSource(models.TextChoices):
