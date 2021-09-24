@@ -23,6 +23,7 @@ class Event(models.Model):
 class Award(models.Model):
     name = models.CharField(max_length=64, unique=True)
     typ = models.CharField(max_length=20)
+    description = models.TextField(blank=True)
     def __str__(self):
         return self.name
 
@@ -89,7 +90,7 @@ class Character(models.Model):
     visited_locations = models.ManyToManyField(Location, through='CharacterLocation')
 
     def __str__(self):
-        return f"{self.name} - {self.difficulty}{self.klass}"
+        return f"{self.id}: {self.name} - {self.difficulty}{self.klass}"
 
 # 'Through' models ######################################################
 
@@ -134,6 +135,8 @@ class CharacterKill(models.Model):
     class Meta:
         order_with_respect_to = 'character'
         unique_together = [['character', 'monster']]
+    def __str__(self):
+        return f"Char {self.character.id}: {self.monster.name} - {self.howmany}"
 
 class CharacterInventory(models.Model):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
@@ -151,5 +154,7 @@ class CharacterLocation(models.Model):
     class Meta:
         order_with_respect_to = 'character'
         unique_together = [['character', 'order'], ['character', 'location']]
+    def __str__(self):
+        return f"Char {self.character.id}: {self.order} - {self.location.name}"
 
 
