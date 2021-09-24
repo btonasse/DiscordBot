@@ -99,10 +99,10 @@ class CharacterEquipment(models.Model):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
     slot = models.IntegerField(blank=True, default=None, null=True)
-    rarity = models.CharField(max_length=3, blank=True, null=True)
+    rarity = models.CharField(max_length=3, blank=True, null=True) # Might not be the best idea, given that '' is not the same as NULL
     perks = models.ManyToManyField(Perk, through='EquipmentPerk', blank=True)
     class Meta:
-        order_with_respect_to = 'character'
+        ordering = ['character']
         unique_together = [['character', 'slot']]
     def __str__(self):
         if self.rarity:
@@ -119,10 +119,12 @@ class EquipmentPerk(models.Model):
     character_equipment = models.ForeignKey(CharacterEquipment, on_delete=models.CASCADE)
     perk = models.ForeignKey(Perk, on_delete=models.CASCADE)
     source = models.CharField(max_length=1, choices=PerkSource.choices)
-    level = models.IntegerField(default=1)
+    level = models.IntegerField(blank=True, default=1, null=True)
     class Meta:
-        order_with_respect_to = 'character_equipment'
+        ordering = ['character_equipment']
         unique_together = [['character_equipment', 'perk']]
+    def __str__(self):
+        return f"CharEquip {self.character_equipment.id}: {self.perk.name} {self.level}"
 
 class CharacterTrait(models.Model):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
@@ -130,7 +132,7 @@ class CharacterTrait(models.Model):
     level = models.IntegerField(default=1)
     order = models.IntegerField()
     class Meta:
-        order_with_respect_to = 'character'
+        ordering = ['character', 'order']
         unique_together = [['character', 'order'], ['character', 'trait', 'level']]
     def __str__(self):
         return f"Char {self.character.id}: {self.order} - {self.trait.name} {self.level}"
@@ -140,7 +142,7 @@ class CharacterKill(models.Model):
     monster = models.ForeignKey(Monster, on_delete=models.CASCADE)
     howmany = models.IntegerField(default=1)
     class Meta:
-        order_with_respect_to = 'character'
+        ordering = ['character']
         unique_together = [['character', 'monster']]
     def __str__(self):
         return f"Char {self.character.id}: {self.monster.name} - {self.howmany}"
@@ -150,8 +152,10 @@ class CharacterInventory(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     howmany = models.IntegerField(default=1)
     class Meta:
-        order_with_respect_to = 'character'
+        ordering = ['character']
         unique_together = [['character', 'item']]
+    def __str__(self):
+        return f"Char {self.character.id}: {self.item.name} - {self.howmany}"
 
 class CharacterLocation(models.Model):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
@@ -159,7 +163,7 @@ class CharacterLocation(models.Model):
     order = models.IntegerField()
     event = models.ForeignKey(Event, on_delete=models.CASCADE, blank=True, default=None, null=True)
     class Meta:
-        order_with_respect_to = 'character'
+        ordering = ['character', 'order']
         unique_together = [['character', 'order'], ['character', 'location']]
     def __str__(self):
         return f"Char {self.character.id}: {self.order} - {self.location.name}"
