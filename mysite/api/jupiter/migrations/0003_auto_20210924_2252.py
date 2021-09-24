@@ -7,18 +7,18 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('games', '0002_award_description'),
+        ('jupiter', '0002_award_description'),
     ]
 
     operations = [
         migrations.AddField(
             model_name='character',
             name='killed_by',
-            field=models.ForeignKey(blank=True, default=None, null=True, on_delete=django.db.models.deletion.CASCADE, to='games.monster'),
+            field=models.ForeignKey(blank=True, default=None, null=True, on_delete=django.db.models.deletion.CASCADE, to='jupiter.monster'),
         ),
         migrations.AlterField(
             model_name='character',
             name='kills',
-            field=models.ManyToManyField(blank=True, related_name='kills', through='games.CharacterKill', to='games.Monster'),
+            field=models.ManyToManyField(blank=True, related_name='kills', through='jupiter.CharacterKill', to='jupiter.Monster'),
         ),
     ]

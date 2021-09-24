@@ -162,7 +162,7 @@ class CharacterKill(models.Model):
     monster = models.ForeignKey(Monster, on_delete=models.CASCADE)
     howmany = models.IntegerField(default=1)
     class Meta:
-        ordering = ['character']
+        ordering = ['character', 'monster']
         unique_together = [['character', 'monster']]
     def __str__(self):
         return f"Char {self.character.id}: {self.monster.name} - {self.howmany}"

@@ -6,7 +6,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('games', '0007_alter_equipmentperk_level'),
+        ('jupiter', '0007_alter_equipmentperk_level'),
     ]
 
     operations = [

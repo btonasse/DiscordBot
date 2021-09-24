@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
                 ('points', models.IntegerField()),
                 ('difficulty', models.CharField(choices=[('E', 'Easy'), ('M', 'Medium'), ('H', 'Hard'), ('U', 'Ultraviolence'), ('N', 'Nightmare')], max_length=1)),
                 ('total_enemies', models.IntegerField()),
-                ('awards', models.ManyToManyField(blank=True, to='games.Award')),
+                ('awards', models.ManyToManyField(blank=True, to='jupiter.Award')),
             ],
         ),
         migrations.CreateModel(
@@ -42,7 +42,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('slot', models.IntegerField()),
                 ('rarity', models.CharField(max_length=3)),
-                ('character', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='games.character')),
+                ('character', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='jupiter.character')),
             ],
         ),
         migrations.CreateModel(
@@ -112,8 +112,8 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('source', models.CharField(choices=[('I', 'Innate'), ('P', 'Power'), ('B', 'Bulk'), ('A', 'Accuracy'), ('C', 'Calibration')], max_length=1)),
                 ('level', models.IntegerField(default=1)),
-                ('character_equipment', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='games.characterequipment')),
-                ('perk', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='games.perk')),
+                ('character_equipment', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='jupiter.characterequipment')),
+                ('perk', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='jupiter.perk')),
             ],
             options={
                 'order_with_respect_to': 'character_equipment',
@@ -126,8 +126,8 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('level', models.IntegerField(default=1)),
                 ('order', models.IntegerField()),
-                ('character', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='games.character')),
-                ('trait', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='games.trait')),
+                ('character', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='jupiter.character')),
+                ('trait', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='jupiter.trait')),
             ],
             options={
                 'order_with_respect_to': 'character',
@@ -139,9 +139,9 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('order', models.IntegerField()),
-                ('character', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='games.character')),
-                ('event', models.ForeignKey(blank=True, default=None, null=True, on_delete=django.db.models.deletion.CASCADE, to='games.event')),
-                ('location', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='games.location')),
+                ('character', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='jupiter.character')),
+                ('event', models.ForeignKey(blank=True, default=None, null=True, on_delete=django.db.models.deletion.CASCADE, to='jupiter.event')),
+                ('location', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='jupiter.location')),
             ],
             options={
                 'order_with_respect_to': 'character',
@@ -153,8 +153,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('howmany', models.IntegerField(default=1)),
-                ('character', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='games.character')),
-                ('monster', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='games.monster')),
+                ('character', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='jupiter.character')),
+                ('monster', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='jupiter.monster')),
             ],
             options={
                 'order_with_respect_to': 'character',
@@ -166,8 +166,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('howmany', models.IntegerField(default=1)),
-                ('character', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='games.character')),
-                ('item', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='games.item')),
+                ('character', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='jupiter.character')),
+                ('item', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='jupiter.item')),
             ],
             options={
                 'order_with_respect_to': 'character',
@@ -177,42 +177,42 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='characterequipment',
             name='equipment',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='games.equipment'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='jupiter.equipment'),
         ),
         migrations.AddField(
             model_name='characterequipment',
             name='perks',
-            field=models.ManyToManyField(blank=True, through='games.EquipmentPerk', to='games.Perk'),
+            field=models.ManyToManyField(blank=True, through='jupiter.EquipmentPerk', to='jupiter.Perk'),
         ),
         migrations.AddField(
             model_name='character',
             name='equipment',
-            field=models.ManyToManyField(blank=True, through='games.CharacterEquipment', to='games.Equipment'),
+            field=models.ManyToManyField(blank=True, through='jupiter.CharacterEquipment', to='jupiter.Equipment'),
         ),
         migrations.AddField(
             model_name='character',
             name='inventory',
-            field=models.ManyToManyField(blank=True, through='games.CharacterInventory', to='games.Item'),
+            field=models.ManyToManyField(blank=True, through='jupiter.CharacterInventory', to='jupiter.Item'),
         ),
         migrations.AddField(
             model_name='character',
             name='kills',
-            field=models.ManyToManyField(blank=True, through='games.CharacterKill', to='games.Monster'),
+            field=models.ManyToManyField(blank=True, through='jupiter.CharacterKill', to='jupiter.Monster'),
         ),
         migrations.AddField(
             model_name='character',
             name='klass',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='games.klass'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='jupiter.klass'),
         ),
         migrations.AddField(
             model_name='character',
             name='traits',
-            field=models.ManyToManyField(blank=True, through='games.CharacterTrait', to='games.Trait'),
+            field=models.ManyToManyField(blank=True, through='jupiter.CharacterTrait', to='jupiter.Trait'),
         ),
         migrations.AddField(
             model_name='character',
             name='visited_locations',
-            field=models.ManyToManyField(through='games.CharacterLocation', to='games.Location'),
+            field=models.ManyToManyField(through='jupiter.CharacterLocation', to='jupiter.Location'),
         ),
         migrations.AlterOrderWithRespectTo(
             name='characterequipment',

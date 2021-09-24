@@ -12,4 +12,6 @@ Run the bot like this:
 
 > python -m bot
 
-### Todo
+### Games DB
+
+todo
