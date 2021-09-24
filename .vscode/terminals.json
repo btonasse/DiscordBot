@@ -10,9 +10,9 @@
       ]
     },
     {
-      "name": "srv",
+      "name": "api",
       "focus": true,
-      "cwd": "./bot_service",
+      "cwd": "./mysite",
       "execute": true,
       "commands": [
         "deactivate",
