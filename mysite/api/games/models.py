@@ -2,21 +2,29 @@ from django.db import models
 
 class Monster(models.Model):
     name = models.CharField(max_length=64, unique=True)
+    class Meta:
+        ordering = ['name']    
     def __str__(self):
         return self.name
 
 class Location(models.Model):
     name = models.CharField(max_length=64, unique=True)
+    class Meta:
+        ordering = ['name']    
     def __str__(self):
         return self.name
 
 class Item(models.Model):
     name = models.CharField(max_length=64, unique=True)
+    class Meta:
+        ordering = ['name']    
     def __str__(self):
         return self.name
 
 class Event(models.Model):
     name = models.CharField(max_length=64, unique=True)
+    class Meta:
+        ordering = ['name']    
     def __str__(self):
         return self.name
 
@@ -24,6 +32,8 @@ class Award(models.Model):
     name = models.CharField(max_length=64, unique=True)
     typ = models.CharField(max_length=20)
     description = models.TextField(blank=True)
+    class Meta:
+        ordering = ['name']    
     def __str__(self):
         return self.name
 
@@ -34,6 +44,8 @@ class Klass(models.Model):
         TECHNICIAN = 'T'
     name = models.CharField(max_length=64, unique=True)
     code = models.CharField(max_length=1, choices=KlassCode.choices)
+    class Meta:
+        ordering = ['name']    
     def __str__(self):
         return f"{self.name} ({self.code})"
 
@@ -41,12 +53,16 @@ class Trait(models.Model):
     name = models.CharField(max_length=64, unique=True)
     short_name = models.CharField(max_length=3)
     description = models.TextField(blank=True)
+    class Meta:
+        ordering = ['name']    
     def __str__(self):
         return f"{self.name} ({self.short_name})"
 
 class Perk(models.Model):
     name = models.CharField(max_length=64, unique=True)
     description = models.TextField(blank=True)
+    class Meta:
+        ordering = ['name']
     def __str__(self):
         return self.name
 
@@ -60,7 +76,8 @@ class Equipment(models.Model):
 
     name = models.CharField(max_length=64, unique=True)
     typ = models.CharField(max_length=1, choices=EquipmentType.choices)
-
+    class Meta:
+        ordering = ['name']
     def __str__(self):
         return self.name
 
@@ -89,7 +106,8 @@ class Character(models.Model):
     equipment = models.ManyToManyField(Equipment, through='CharacterEquipment', blank=True)
     inventory = models.ManyToManyField(Item, through='CharacterInventory', blank=True)
     visited_locations = models.ManyToManyField(Location, through='CharacterLocation')
-
+    class Meta:
+        ordering = ['name']
     def __str__(self):
         return f"{self.id}: {self.name} - {self.difficulty}{self.klass.code}"
 
@@ -124,7 +142,9 @@ class EquipmentPerk(models.Model):
         ordering = ['character_equipment']
         unique_together = [['character_equipment', 'perk']]
     def __str__(self):
-        return f"CharEquip {self.character_equipment.id}: {self.perk.name} {self.level}"
+        if self.level:
+            return f"CharEquip {self.character_equipment.id}: {self.perk.name} {self.level}"
+        return f"CharEquip {self.character_equipment.id}: {self.perk.name}"
 
 class CharacterTrait(models.Model):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
