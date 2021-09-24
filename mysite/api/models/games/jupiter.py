@@ -74,7 +74,6 @@ class Character(models.Model):
     name = models.CharField(max_length=64)
     klass = models.ForeignKey(Klass, on_delete=models.CASCADE)
     won = models.BooleanField(default=False)
-    last_location = models.ForeignKey(Location, on_delete=models.CASCADE)
     level = models.IntegerField(default=1)
     turns_survived = models.IntegerField()
     run_time = models.DurationField()
@@ -99,7 +98,7 @@ class CharacterEquipment(models.Model):
     equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
     slot = models.IntegerField()
     rarity = models.CharField(max_length=3)
-    perks = models.ManyToManyField(Perk, through='EquipmentPerk', on_delete=models.CASCADE, blank=True)
+    perks = models.ManyToManyField(Perk, through='EquipmentPerk', blank=True)
     class Meta:
         order_with_respect_to = 'character'
         unique_together = [['character', 'slot']]
