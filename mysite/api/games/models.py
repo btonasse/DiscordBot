@@ -99,13 +99,13 @@ class CharacterEquipment(models.Model):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
     slot = models.IntegerField(blank=True, default=None, null=True)
-    rarity = models.CharField(max_length=3)
+    rarity = models.CharField(max_length=3, blank=True, null=True)
     perks = models.ManyToManyField(Perk, through='EquipmentPerk', blank=True)
     class Meta:
         order_with_respect_to = 'character'
         unique_together = [['character', 'slot']]
     def __str__(self):
-        return f"Char {self.character.id}: {self.rarity} {self.equipment.name}"
+        return f"Char {self.character.id}: {self.rarity+' '}{self.equipment.name}"
 
 class EquipmentPerk(models.Model):
     class PerkSource(models.TextChoices):
