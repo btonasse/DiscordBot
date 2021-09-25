@@ -71,3 +71,4 @@ class CharacterSerializer(serializers.ModelSerializer):
     class Meta:
         model = md.Character
         fields = '__all__'
+        depth = 2
