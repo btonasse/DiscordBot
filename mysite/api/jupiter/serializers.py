@@ -40,12 +40,30 @@ class PerkSerializer(serializers.ModelSerializer):
     class Meta:
         model = md.Perk
         fields = '__all__'
-
 class EquipmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = md.Equipment
         fields = '__all__'
+class PerksRelatedField(serializers.RelatedField):
+    def to_representation(self, value):
+        name = value.perk.name
+        if value.level:
+            name += f" {value.level}"
+        return name
 
+class CharacterEquipmentSerializer(serializers.ModelSerializer):
+    full_name = serializers.SerializerMethodField()
+    perks = PerksRelatedField(source='equipmentperk_set', queryset=md.EquipmentPerk.objects.all(), many=True)
+    def get_full_name(self, instance):
+        name = instance.equipment.name
+        if instance.rarity:
+            name = f"{instance.rarity} {name}"
+        if instance.mod_code:
+            name += f" {instance.mod_code}"
+        return name
+    class Meta:
+        model = md.CharacterEquipment
+        exclude = ['id', 'character', 'mod_code', 'rarity', 'equipment']
 class CharacterTraitSerializer(serializers.ModelSerializer):
     #name = serializers.ReadOnlyField(source='trait.name')
     class Meta:
@@ -53,29 +71,32 @@ class CharacterTraitSerializer(serializers.ModelSerializer):
         #exclude = ['id', 'character', 'trait']
         exclude = ['id']
 
-
 class TraitsRelatedField(serializers.RelatedField):
     def to_representation(self, value):
         return f"{value.order}: {value.trait.name} {value.level}"
 class KillsRelatedField(serializers.RelatedField):
     def to_representation(self, value):
         return f"{value.monster.name}: {value.howmany}"
-
+class LocationsRelatedField(serializers.RelatedField):
+    def to_representation(self, value):
+        name = f"{value.order}: {value.location.name}"
+        if value.event:
+            name += f" - {value.event}"
+        return name
+class InventoryRelatedField(serializers.RelatedField):
+    def to_representation(self, value):
+        return f"{value.item.name}: {value.howmany}"
 
 class CharacterSerializer(serializers.ModelSerializer): #Pretty version, but might be more useful to get the actual serialized representation of each nested field?
-    '''
-    awards = AwardSerializer(many=True)
-    traits = CharacterTraitSerializer(many=True)
-    kills = MonsterSerializer(many=True)
-    equipment = TraitSerializer(many=True)
-    inventory = TraitSerializer(many=True)
-    visited_locations = TraitSerializer(many=True)
-    '''
     #traits = CharacterTraitSerializer(source='charactertrait_set', many=True)
     #traits = serializers.StringRelatedField(source='charactertrait_set', many=True)
+    killed_by = serializers.StringRelatedField()
     awards = serializers.StringRelatedField(many=True)
     traits = TraitsRelatedField(source='charactertrait_set', queryset=md.CharacterTrait.objects.all(), many=True)
     kills = KillsRelatedField(source='characterkill_set', queryset=md.CharacterKill.objects.all(), many=True)
+    visited_locations = LocationsRelatedField(source='characterlocation_set', queryset=md.CharacterLocation.objects.all(), many=True)
+    inventory = InventoryRelatedField(source='characterinventory_set', queryset=md.CharacterInventory.objects.all(), many=True)
+    equipment = CharacterEquipmentSerializer(source='characterequipment_set', many=True)
     
     def create(self, validated_data):
         return super().create(validated_data)
@@ -84,4 +105,4 @@ class CharacterSerializer(serializers.ModelSerializer): #Pretty version, but mig
 
     class Meta:
         model = md.Character
-        fields = '__all__'
+        fields = ['id', 'name', 'level', 'won', 'turns_survived', 'killed_by', 'run_time', 'seed', 'points', 'difficulty', 'total_enemies', 'awards', 'visited_locations', 'traits', 'kills', 'equipment', 'inventory']
