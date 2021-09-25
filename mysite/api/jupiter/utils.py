@@ -142,7 +142,7 @@ class MortemParser:
                         level = None
                         name = ' '.join(split_name)
                     perks.append({'name': name, 'level': level})
-                data['equipment'].append ({'name': equip_name, 'slot': slot, 'rarity': rarity, 'mod_code': mod_code, 'perks': perks})
+            data['equipment'].append({'name': equip_name, 'slot': slot, 'rarity': rarity, 'mod_code': mod_code, 'perks': perks})
 
         invpattern = re.compile(r'(?<=Inventory\n)(.+)', re.DOTALL)
         inv_lines = re.search(invpattern, self._mortem).groups()[0].splitlines()

@@ -297,76 +297,11 @@
     ],
     "equipment": [
         {
-            "name": "7.62 assault rifle",
-            "slot": 2,
-            "rarity": " AV1",
-            "mod_code": "+A2",
-            "perks": [
-                {
-                    "name": "Calibrated",
-                    "level": 1
-                },
-                {
-                    "name": "Auto-calibrated",
-                    "level": null
-                },
-                {
-                    "name": "Stabilized",
-                    "level": 1
-                },
-                {
-                    "name": "Hunter",
-                    "level": 3
-                }
-            ]
-        },
-        {
-            "name": "7.62 assault rifle",
-            "slot": 2,
-            "rarity": " AV1",
-            "mod_code": "+A2",
-            "perks": [
-                {
-                    "name": "Calibrated",
-                    "level": 1
-                },
-                {
-                    "name": "Auto-calibrated",
-                    "level": null
-                },
-                {
-                    "name": "Stabilized",
-                    "level": 1
-                },
-                {
-                    "name": "Hunter",
-                    "level": 3
-                }
-            ]
-        },
-        {
-            "name": "7.62 assault rifle",
-            "slot": 2,
-            "rarity": " AV1",
-            "mod_code": "+A2",
-            "perks": [
-                {
-                    "name": "Calibrated",
-                    "level": 1
-                },
-                {
-                    "name": "Auto-calibrated",
-                    "level": null
-                },
-                {
-                    "name": "Stabilized",
-                    "level": 1
-                },
-                {
-                    "name": "Hunter",
-                    "level": 3
-                }
-            ]
+            "name": "CRI plasma shotgun",
+            "slot": 1,
+            "rarity": null,
+            "mod_code": null,
+            "perks": []
         },
         {
             "name": "7.62 assault rifle",
@@ -413,60 +348,11 @@
             ]
         },
         {
-            "name": "katana",
-            "slot": 3,
+            "name": "rocket launcher",
+            "slot": 4,
             "rarity": null,
-            "mod_code": "PBA",
-            "perks": [
-                {
-                    "name": "Ripper",
-                    "level": 5
-                },
-                {
-                    "name": "Swap Harness",
-                    "level": null
-                },
-                {
-                    "name": "Mechabane",
-                    "level": null
-                }
-            ]
-        },
-        {
-            "name": "katana",
-            "slot": 3,
-            "rarity": null,
-            "mod_code": "PBA",
-            "perks": [
-                {
-                    "name": "Ripper",
-                    "level": 5
-                },
-                {
-                    "name": "Swap Harness",
-                    "level": null
-                },
-                {
-                    "name": "Mechabane",
-                    "level": null
-                }
-            ]
-        },
-        {
-            "name": "duramesh scout armor",
-            "slot": null,
-            "rarity": null,
-            "mod_code": "B",
-            "perks": [
-                {
-                    "name": "Fire-resistant",
-                    "level": null
-                },
-                {
-                    "name": "Duramesh",
-                    "level": null
-                }
-            ]
+            "mod_code": null,
+            "perks": []
         },
         {
             "name": "duramesh scout armor",
