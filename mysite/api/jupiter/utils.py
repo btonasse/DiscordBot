@@ -1,6 +1,6 @@
 import re
 from pathlib import Path
-
+import json
 class MortemParser:
     '''
     Parses a mortem.txt file generated after a Jupiter Hell run finishes
@@ -56,80 +56,81 @@ class MortemParser:
         line8 = re.compile(r'He took (.+) risks.')
         data['difficulty'] = re.search(line8, self._mortem).groups()[0]
 
-        locpattern = re.compile(r'(CALLISTO .+)\n\nHe killed', re.DOTALL)
-        loclines = re.search(locpattern, self._mortem).groups()[0].splitlines()
+        locpattern = re.compile(r'^(\w+(?: \w+)*) -(.*)$', re.MULTILINE)
+        loc_groups = re.findall(locpattern, self._mortem)
         data['visited_locations'] = dict()
         order = 0
-        for line in loclines:
-            line_list = line.split('-')
-            left = line_list[0].strip()
-            right = line_list[1].strip()
-            if not data['visited_locations'].get(left):
+        for grp in loc_groups:
+            left = grp[0].strip()
+            right = grp[1].strip()
+            if left not in data['visited_locations']:
                 order += 1
                 data['visited_locations'][left] = {'order': order, 'event': None}
-            if not right.startswith('>'):
-                data['visited_locations'][left]['event'] = right.strip()
-            else:
+            if right.startswith('>'):
                 order += 1
-                data['visited_locations'][right[1:].strip()] = {'order': order, 'event': None}
+                data['visited_locations'][right[1:]] = {'order': order, 'event': None}
+            else:
+                data['visited_locations'][left]['event'] = right
         if last_location and last_location not in data['visited_locations']:
             data['visited_locations'][last_location] = {'order': order+1, 'event': None}
 
         totenemies = re.compile(r'He killed \d+ out of (\d+) enemies.')
         data['total_enemies'] = int(re.search(totenemies, self._mortem).groups()[0])
         
-        killpattern = re.compile(r'enemies.\n\n(.+)\nTraits', re.DOTALL)
-        kill_lines = re.search(killpattern, self._mortem).groups()[0].splitlines()
+        killpattern = re.compile(r'(?:^ |\s{3})(\d+)\s{1,2}(\w+(?: \w+)*)', re.MULTILINE)
+        kill_groups = re.findall(killpattern, self._mortem)
         data['kills'] = dict()
-        for line in kill_lines:
-            line_list = line.split('   ')
-            left = line_list[0].strip()
-            if len(line_list) > 1:
-                right = line_list[-1].strip()
-            else:
-                right = None
-            leftlist = left.split()
-            lmonster = ' '.join(leftlist[1:])
-            leftnum = leftlist[0]
-            data['kills'][lmonster] = leftnum
-            if right:
-                rightlist = right.split()
-                rmonster = ' '.join(rightlist[1:])
-                rightnum = rightlist[0]
-                data['kills'][rmonster] = rightnum
+        for grp in kill_groups:
+            data['kills'][grp[1]] = grp[0] 
 
-        traitpattern = re.compile(r'Trait order\n(.+)\s+Equipment', re.DOTALL)
-        trait_lines = re.search(traitpattern, self._mortem).groups()[0].splitlines()
-        data['traits'] = []
-        for line in trait_lines:
-            for trait_code in line.strip().split('->'):
-                if trait_code:
-                    data['traits'].append(trait_code)
+        traitpattern = re.compile(r'(?<=^  |->)*?(\w+)(?=->|\n\nEquipment)', re.MULTILINE)
+        data['traits'] = re.findall(traitpattern, self._mortem)
 
-        equippattern = re.compile(r'Equipment\n(.+)\s+Inventory', re.DOTALL)
-        equip_lines = re.search(equippattern, self._mortem).groups()[0].splitlines()
+        equipattern = re.compile(r'(?:^  Slot #|^  )(\d|Body|Head|Utility|Relic) +:( AV1| AV2| ENV)? ?(\S+(?: [^ \+ABP]+| AMP)*) ?([\+ABP\d]+)?\n((?:   \* )(?:.+\n)+)?', re.MULTILINE)
+        equip_lines = re.findall(equipattern, self._mortem)
         data['equipment'] = dict()
-        slotno = 0
         for line in equip_lines:
-            if line.strip().startswith('Slot'):
-                slotno += 1
-                #todo
+            if all(char in '0123456789' for char in line[0]):
+                slot = int(line[0])
+            else:
+                slot = None
+            rarity = line[1] or None
+            name = line[2]
+            mod_code = line[3] or None
+            # Build perk list
+            perks_raw = [perk.lstrip('   * ') for perk in line[4].split('\n') if perk] 
+            # Separte perk name and level
+            perks = []
+            for perk in perks_raw:
+                if perk:
+                    split_name = perk.split()
+                    try:
+                        level = int(split_name[-1])
+                        name = ' '.join(split_name[:-1])
+                    except ValueError:
+                        level = None
+                        name = ' '.join(split_name)
+                    perks.append({'name': name, 'level': level})
+                data['equipment'][name] = {'slot': slot, 'rarity': rarity, 'mod_code': mod_code, 'perks': perks}
 
+        invpattern = re.compile(r'(?<=Inventory\n)(.+)', re.DOTALL)
+        inv_lines = re.search(invpattern, self._mortem).groups()[0].splitlines()
+        inventory = dict()
+        for line in inv_lines:
+            split_line_raw = line.split('(')
+            split_line = [item[1:].strip().replace(')','') for item in split_line_raw]
+            if not inventory.get(split_line[0]):
+                inventory[split_line[0]] = 0
+            try:
+                inventory[split_line[0]] += int(split_line[1])
+            except IndexError:
+                inventory[split_line[0]] += 1 # There is no count for this inventory line
+        data['inventory'] = inventory            
 
-
-            
-
-
-
-
-        
-        
-
-        
         self.data = data
         return data
         
 
 x = MortemParser('test.txt')
 data = x.parse()
-print(data)
+print(json.dumps(data, indent=2))

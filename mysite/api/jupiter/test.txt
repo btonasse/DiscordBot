@@ -1,0 +1,112 @@
+Bolso, level 14 Technician,
+killed on Shadow Halls L2 by a exalted ravager.
+
+He survived for 9037 turns.
+The run time was 1h 59m 9s.
+World seed was 6756.
+He scored 2254 points.
+He took MEDIUM risks.
+
+Death log
+ * your action, you're at 108 health
+ * exalted ravager deals 22 damage to you
+ * exalted ravager deals 22 damage to you
+ * your action, you're at 64 health
+ * exalted ravager deals 22 damage to you
+ * your action, you're at 42 health
+ * exalted ravager deals 22 damage to you
+ * exalted ravager deals 22 damage to you
+ * health down to -2, you die
+
+CALLISTO L2 - Lockdown
+CALLISTO L2 -> Valhalla Terminal L1
+Valhalla Terminal L3 - Lockdown
+Valhalla Terminal L3 -> Valhalla Command
+Valhalla Command - Cleared!
+Europa Concourse - Low Power
+Europa Concourse -> Europa Dig Zone L1
+Europa Dig Zone L2 - Exalted Summons
+IO L3 -> Shadow Halls L1
+Shadow Halls L2 - Exalted Curse
+
+
+He killed 354 out of 362 enemies.
+
+ 40 former grunts           2  toxic fiends
+ 12 corrupted grunts        21 CalSec sentries
+ 4  former CRI grunts       5  security sentries
+ 14 former soldiers         10 CalSec bots
+ 22 corrupted soldiers      3  security bots
+ 1  former CRI soldier      1  military bot
+ 7  former sergeants        1  guardian bot
+ 1  corrupted sergeant      8  reavers
+ 2  former CRI sergeants    12 cryoreavers
+ 12 former guards           2  toxic reavers
+ 6  corrupted guards        6  archreavers
+ 1  former commando         6  cryoberi
+ 6  corrupted commandoes    1  toxiberos
+ 2  former CRI commandoes   1  medusa
+ 6  corrupted heavies       3  ravagers
+ 17 security drones         8  armored ravagers
+ 4  combat drones           3  siege ravagers
+ 4  military drones         2  plasma ravagers
+ 25 fiends                  9  CRI marines
+ 11 fire fiends             3  CRI bots
+ 31 ice fiends
+
+Traits
+  Whizkid L1
+  Powerjack L1
+  Cover Master L2
+  Juggler L3
+  Sustained fire L1
+  Hoarder L3
+  Toxicologist L1
+  ENTRENCHMENT L1
+
+Trait order
+  Jug->Cov->Pow->Tox->SF->Cov->MEN->Whk->
+  Hor->Hor->Hor->Jug->Jug
+
+Equipment
+  Slot #1 : CRI plasma shotgun
+  Slot #2 : AV1 7.62 assault rifle +A2
+   * Calibrated 1
+   * Auto-calibrated
+   * Stabilized 1
+   * Hunter 3
+
+  Slot #3 : katana PBA
+   * Ripper 5
+   * Swap Harness
+   * Mechabane
+
+  Slot #4 : rocket launcher
+  Body    : duramesh scout armor B
+   * Fire-resistant
+   * Duramesh
+
+  Head    :  - NONE - 
+  Utility : AV1 auto AMP
+   * Auto accelerator
+
+  Relic   : reaver's claw
+   * Bloody Tears
+
+
+Inventory
+  energy cell (x94)
+  rocket (x6)
+  7.62 ammo (x71)
+  accuracy mod pack
+  plasma grenade (x2)
+  gas grenade (x3)
+  krak grenade (x1)
+  frag grenade (x1)
+  CRI phase kit (x3)
+  multitool (x3)
+  military stimpack
+  large medkit
+  large medkit
+  large medkit
+  red keycard (x3)

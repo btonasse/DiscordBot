@@ -118,6 +118,7 @@ class CharacterEquipment(models.Model):
     equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
     slot = models.IntegerField(blank=True, default=None, null=True)
     rarity = models.CharField(max_length=3, blank=True, null=True) # Might not be the best idea, given that '' is not the same as NULL
+    mod_code = models.CharField(max_length=10, blank=True, default=None, null=True) # Idem
     perks = models.ManyToManyField(Perk, through='EquipmentPerk', blank=True)
     class Meta:
         ordering = ['character']
@@ -128,15 +129,8 @@ class CharacterEquipment(models.Model):
         return f"Char {self.character.id}: {self.equipment.name}"
 
 class EquipmentPerk(models.Model):
-    class PerkSource(models.TextChoices):
-        INNATE = 'I'
-        POWER = 'P'
-        BULK = 'B'
-        ACCURACY = 'A'
-        CALIBRATION = 'C'
     character_equipment = models.ForeignKey(CharacterEquipment, on_delete=models.CASCADE)
     perk = models.ForeignKey(Perk, on_delete=models.CASCADE)
-    source = models.CharField(max_length=1, choices=PerkSource.choices)
     level = models.IntegerField(blank=True, default=1, null=True)
     class Meta:
         ordering = ['character_equipment']
