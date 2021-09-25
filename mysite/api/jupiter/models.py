@@ -47,7 +47,7 @@ class Klass(models.Model):
     class Meta:
         ordering = ['name']    
     def __str__(self):
-        return f"{self.name} ({self.code})"
+        return f"{self.name}"
 
 class Trait(models.Model):
     name = models.CharField(max_length=64, unique=True)
