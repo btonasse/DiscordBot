@@ -1,12 +1,16 @@
 import re
 from pathlib import Path
 import json
+import os
 class MortemParser:
     '''
     Parses a mortem.txt file generated after a Jupiter Hell run finishes
     '''
-    def __init__(self, filepath: str) -> None:
-        self._filepath = Path(filepath).resolve()
+    def __init__(self, filepath: str = '') -> None:
+        if filepath:
+            self._filepath = Path(filepath).resolve()
+        else:
+            self._filepath = Path(os.getenv('JUPITER_MORTEM')).resolve()
         self._mortem = self._load_file()
         self.data = dict()
 
@@ -132,6 +136,6 @@ class MortemParser:
         
 if __name__ == '__main__':
     import json
-    x = MortemParser('tests/mortem.txt')
+    x = MortemParser()
     data = x.parse()
-    print(json.dumps(data, indent=1))
+    print(json.dumps(data, indent=4))

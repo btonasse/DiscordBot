@@ -1,0 +1,335 @@
+{
+    "name": "Bolso",
+    "level": 14,
+    "klass": "Technician",
+    "won": false,
+    "killed_by": "exalted ravager",
+    "turns_survived": 9037,
+    "run_time": "1:59:9",
+    "seed": 6756,
+    "points": 2254,
+    "difficulty": "MEDIUM",
+    "visited_locations": {
+        "CALLISTO L2": {
+            "order": 1,
+            "event": "Lockdown"
+        },
+        " Valhalla Terminal L1": {
+            "order": 2,
+            "event": null
+        },
+        "Valhalla Terminal L3": {
+            "order": 3,
+            "event": "Lockdown"
+        },
+        " Valhalla Command": {
+            "order": 4,
+            "event": null
+        },
+        "Valhalla Command": {
+            "order": 5,
+            "event": "Cleared!"
+        },
+        "Europa Concourse": {
+            "order": 6,
+            "event": "Low Power"
+        },
+        " Europa Dig Zone L1": {
+            "order": 7,
+            "event": null
+        },
+        "Europa Dig Zone L2": {
+            "order": 8,
+            "event": "Exalted Summons"
+        },
+        "IO L3": {
+            "order": 9,
+            "event": null
+        },
+        " Shadow Halls L1": {
+            "order": 10,
+            "event": null
+        },
+        "Shadow Halls L2": {
+            "order": 11,
+            "event": "Exalted Curse"
+        }
+    },
+    "total_enemies": 362,
+    "kills": {
+        "former grunts": "40",
+        "toxic fiends": "2",
+        "corrupted grunts": "12",
+        "CalSec sentries": "21",
+        "former CRI grunts": "4",
+        "security sentries": "5",
+        "former soldiers": "14",
+        "CalSec bots": "10",
+        "corrupted soldiers": "22",
+        "security bots": "3",
+        "former CRI soldier": "1",
+        "military bot": "1",
+        "former sergeants": "7",
+        "guardian bot": "1",
+        "corrupted sergeant": "1",
+        "reavers": "8",
+        "former CRI sergeants": "2",
+        "cryoreavers": "12",
+        "former guards": "12",
+        "toxic reavers": "2",
+        "corrupted guards": "6",
+        "archreavers": "6",
+        "former commando": "1",
+        "cryoberi": "6",
+        "corrupted commandoes": "6",
+        "toxiberos": "1",
+        "former CRI commandoes": "2",
+        "medusa": "1",
+        "corrupted heavies": "6",
+        "ravagers": "3",
+        "security drones": "17",
+        "armored ravagers": "8",
+        "combat drones": "4",
+        "siege ravagers": "3",
+        "military drones": "4",
+        "plasma ravagers": "2",
+        "fiends": "25",
+        "CRI marines": "9",
+        "fire fiends": "11",
+        "CRI bots": "3",
+        "ice fiends": "31"
+    },
+    "traits": [
+        "Jug",
+        "Cov",
+        "Pow",
+        "Tox",
+        "SF",
+        "Cov",
+        "MEN",
+        "Whk",
+        "Hor",
+        "Hor",
+        "Hor",
+        "Jug",
+        "Jug"
+    ],
+    "equipment": {
+        "Calibrated": {
+            "slot": 2,
+            "rarity": " AV1",
+            "mod_code": "+A2",
+            "perks": [
+                {
+                    "name": "Calibrated",
+                    "level": 1
+                },
+                {
+                    "name": "Auto-calibrated",
+                    "level": null
+                },
+                {
+                    "name": "Stabilized",
+                    "level": 1
+                },
+                {
+                    "name": "Hunter",
+                    "level": 3
+                }
+            ]
+        },
+        "Auto-calibrated": {
+            "slot": 2,
+            "rarity": " AV1",
+            "mod_code": "+A2",
+            "perks": [
+                {
+                    "name": "Calibrated",
+                    "level": 1
+                },
+                {
+                    "name": "Auto-calibrated",
+                    "level": null
+                },
+                {
+                    "name": "Stabilized",
+                    "level": 1
+                },
+                {
+                    "name": "Hunter",
+                    "level": 3
+                }
+            ]
+        },
+        "Stabilized": {
+            "slot": 2,
+            "rarity": " AV1",
+            "mod_code": "+A2",
+            "perks": [
+                {
+                    "name": "Calibrated",
+                    "level": 1
+                },
+                {
+                    "name": "Auto-calibrated",
+                    "level": null
+                },
+                {
+                    "name": "Stabilized",
+                    "level": 1
+                },
+                {
+                    "name": "Hunter",
+                    "level": 3
+                }
+            ]
+        },
+        "Hunter": {
+            "slot": 2,
+            "rarity": " AV1",
+            "mod_code": "+A2",
+            "perks": [
+                {
+                    "name": "Calibrated",
+                    "level": 1
+                },
+                {
+                    "name": "Auto-calibrated",
+                    "level": null
+                },
+                {
+                    "name": "Stabilized",
+                    "level": 1
+                },
+                {
+                    "name": "Hunter",
+                    "level": 3
+                }
+            ]
+        },
+        "Ripper": {
+            "slot": 3,
+            "rarity": null,
+            "mod_code": "PBA",
+            "perks": [
+                {
+                    "name": "Ripper",
+                    "level": 5
+                },
+                {
+                    "name": "Swap Harness",
+                    "level": null
+                },
+                {
+                    "name": "Mechabane",
+                    "level": null
+                }
+            ]
+        },
+        "Swap Harness": {
+            "slot": 3,
+            "rarity": null,
+            "mod_code": "PBA",
+            "perks": [
+                {
+                    "name": "Ripper",
+                    "level": 5
+                },
+                {
+                    "name": "Swap Harness",
+                    "level": null
+                },
+                {
+                    "name": "Mechabane",
+                    "level": null
+                }
+            ]
+        },
+        "Mechabane": {
+            "slot": 3,
+            "rarity": null,
+            "mod_code": "PBA",
+            "perks": [
+                {
+                    "name": "Ripper",
+                    "level": 5
+                },
+                {
+                    "name": "Swap Harness",
+                    "level": null
+                },
+                {
+                    "name": "Mechabane",
+                    "level": null
+                }
+            ]
+        },
+        "Fire-resistant": {
+            "slot": null,
+            "rarity": null,
+            "mod_code": "B",
+            "perks": [
+                {
+                    "name": "Fire-resistant",
+                    "level": null
+                },
+                {
+                    "name": "Duramesh",
+                    "level": null
+                }
+            ]
+        },
+        "Duramesh": {
+            "slot": null,
+            "rarity": null,
+            "mod_code": "B",
+            "perks": [
+                {
+                    "name": "Fire-resistant",
+                    "level": null
+                },
+                {
+                    "name": "Duramesh",
+                    "level": null
+                }
+            ]
+        },
+        "Auto accelerator": {
+            "slot": null,
+            "rarity": " AV1",
+            "mod_code": null,
+            "perks": [
+                {
+                    "name": "Auto accelerator",
+                    "level": null
+                }
+            ]
+        },
+        "Bloody Tears": {
+            "slot": null,
+            "rarity": null,
+            "mod_code": null,
+            "perks": [
+                {
+                    "name": "Bloody Tears",
+                    "level": null
+                }
+            ]
+        }
+    },
+    "inventory": {
+        "energy cell": 94,
+        "rocket": 6,
+        "7.62 ammo": 71,
+        "accuracy mod pack": 1,
+        "plasma grenade": 2,
+        "gas grenade": 3,
+        "krak grenade": 1,
+        "frag grenade": 1,
+        "CRI phase kit": 3,
+        "multitool": 3,
+        "military stimpack": 1,
+        "large medkit": 3,
+        "red keycard": 3
+    }
+}

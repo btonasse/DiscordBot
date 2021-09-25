@@ -64,12 +64,6 @@ class CharacterEquipmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = md.CharacterEquipment
         exclude = ['id', 'character', 'mod_code', 'rarity', 'equipment']
-class CharacterTraitSerializer(serializers.ModelSerializer):
-    #name = serializers.ReadOnlyField(source='trait.name')
-    class Meta:
-        model = md.CharacterTrait
-        #exclude = ['id', 'character', 'trait']
-        exclude = ['id']
 
 class TraitsRelatedField(serializers.RelatedField):
     def to_representation(self, value):
