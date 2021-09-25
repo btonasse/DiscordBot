@@ -34,7 +34,7 @@ class KlassSerializer(serializers.ModelSerializer):
 class TraitSerializer(serializers.ModelSerializer):
     class Meta:
         model = md.Trait
-        fields = '__all__'
+        fields = ['short_name']
 
 class PerkSerializer(serializers.ModelSerializer):
     class Meta:
@@ -47,12 +47,22 @@ class EquipmentSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class CharacterTraitSerializer(serializers.ModelSerializer):
-
+    #name = serializers.ReadOnlyField(source='trait.name')
     class Meta:
-        model = md.Equipment
+        model = md.CharacterTrait
+        #exclude = ['id', 'character', 'trait']
         exclude = ['id']
 
-class CharacterSerializer(serializers.ModelSerializer):
+
+class TraitsRelatedField(serializers.RelatedField):
+    def to_representation(self, value):
+        return f"{value.order}: {value.trait.name} {value.level}"
+class KillsRelatedField(serializers.RelatedField):
+    def to_representation(self, value):
+        return f"{value.monster.name}: {value.howmany}"
+
+
+class CharacterSerializer(serializers.ModelSerializer): #Pretty version, but might be more useful to get the actual serialized representation of each nested field?
     '''
     awards = AwardSerializer(many=True)
     traits = CharacterTraitSerializer(many=True)
@@ -61,8 +71,12 @@ class CharacterSerializer(serializers.ModelSerializer):
     inventory = TraitSerializer(many=True)
     visited_locations = TraitSerializer(many=True)
     '''
-
-
+    #traits = CharacterTraitSerializer(source='charactertrait_set', many=True)
+    #traits = serializers.StringRelatedField(source='charactertrait_set', many=True)
+    awards = serializers.StringRelatedField(many=True)
+    traits = TraitsRelatedField(source='charactertrait_set', queryset=md.CharacterTrait.objects.all(), many=True)
+    kills = KillsRelatedField(source='characterkill_set', queryset=md.CharacterKill.objects.all(), many=True)
+    
     def create(self, validated_data):
         return super().create(validated_data)
     def update(self, instance, validated_data):
@@ -71,4 +85,3 @@ class CharacterSerializer(serializers.ModelSerializer):
     class Meta:
         model = md.Character
         fields = '__all__'
-        depth = 2
