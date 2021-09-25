@@ -9,106 +9,291 @@
     "seed": 6756,
     "points": 2254,
     "difficulty": "M",
-    "visited_locations": {
-        "CALLISTO L2": {
+    "visited_locations": [
+        {
+            "name": "CALLISTO L2",
             "order": 1,
             "event": "Lockdown"
         },
-        "Valhalla Terminal L1": {
+        {
+            "name": "Valhalla Terminal L1",
             "order": 2,
             "event": null
         },
-        "Valhalla Terminal L3": {
+        {
+            "name": "Valhalla Terminal L3",
             "order": 3,
             "event": "Lockdown"
         },
-        "Valhalla Command": {
+        {
+            "name": "Valhalla Command",
             "order": 4,
             "event": "Cleared!"
         },
-        "Europa Concourse": {
+        {
+            "name": "Europa Concourse",
             "order": 5,
             "event": "Low Power"
         },
-        "Europa Dig Zone L1": {
+        {
+            "name": "Europa Dig Zone L1",
             "order": 6,
             "event": null
         },
-        "Europa Dig Zone L2": {
+        {
+            "name": "Europa Dig Zone L2",
             "order": 7,
             "event": "Exalted Summons"
         },
-        "IO L3": {
+        {
+            "name": "IO L3",
             "order": 8,
             "event": null
         },
-        "Shadow Halls L1": {
+        {
+            "name": "Shadow Halls L1",
             "order": 9,
             "event": null
         },
-        "Shadow Halls L2": {
+        {
+            "name": "Shadow Halls L2",
             "order": 10,
             "event": "Exalted Curse"
         }
-    },
+    ],
     "total_enemies": 362,
-    "kills": {
-        "former grunt": "40",
-        "toxic fiend": "2",
-        "corrupted grunt": "12",
-        "CalSec sentry": "21",
-        "former CRI grunt": "4",
-        "security sentry": "5",
-        "former soldier": "14",
-        "CalSec bot": "10",
-        "corrupted soldier": "22",
-        "security bot": "3",
-        "former CRI soldier": "1",
-        "military bot": "1",
-        "former sergeant": "7",
-        "guardian bot": "1",
-        "corrupted sergeant": "1",
-        "reaver": "8",
-        "former CRI sergeant": "2",
-        "cryoreaver": "12",
-        "former guard": "12",
-        "toxic reaver": "2",
-        "corrupted guard": "6",
-        "archreaver": "6",
-        "former commando": "1",
-        "cryoberos": "6",
-        "corrupted commando": "6",
-        "toxiberos": "1",
-        "former CRI commando": "2",
-        "medusa": "1",
-        "corrupted heavy": "6",
-        "ravager": "3",
-        "security drone": "17",
-        "armored ravager": "8",
-        "combat drone": "4",
-        "siege ravager": "3",
-        "military drone": "4",
-        "plasma ravager": "2",
-        "fiend": "25",
-        "CRI marine": "9",
-        "fire fiend": "11",
-        "CRI bot": "3",
-        "ice fiend": "31"
-    },
+    "kills": [
+        {
+            "name": "former grunt",
+            "howmany": "40"
+        },
+        {
+            "name": "toxic fiend",
+            "howmany": "2"
+        },
+        {
+            "name": "corrupted grunt",
+            "howmany": "12"
+        },
+        {
+            "name": "CalSec sentry",
+            "howmany": "21"
+        },
+        {
+            "name": "former CRI grunt",
+            "howmany": "4"
+        },
+        {
+            "name": "security sentry",
+            "howmany": "5"
+        },
+        {
+            "name": "former soldier",
+            "howmany": "14"
+        },
+        {
+            "name": "CalSec bot",
+            "howmany": "10"
+        },
+        {
+            "name": "corrupted soldier",
+            "howmany": "22"
+        },
+        {
+            "name": "security bot",
+            "howmany": "3"
+        },
+        {
+            "name": "former CRI soldier",
+            "howmany": "1"
+        },
+        {
+            "name": "military bot",
+            "howmany": "1"
+        },
+        {
+            "name": "former sergeant",
+            "howmany": "7"
+        },
+        {
+            "name": "guardian bot",
+            "howmany": "1"
+        },
+        {
+            "name": "corrupted sergeant",
+            "howmany": "1"
+        },
+        {
+            "name": "reaver",
+            "howmany": "8"
+        },
+        {
+            "name": "former CRI sergeant",
+            "howmany": "2"
+        },
+        {
+            "name": "cryoreaver",
+            "howmany": "12"
+        },
+        {
+            "name": "former guard",
+            "howmany": "12"
+        },
+        {
+            "name": "toxic reaver",
+            "howmany": "2"
+        },
+        {
+            "name": "corrupted guard",
+            "howmany": "6"
+        },
+        {
+            "name": "archreaver",
+            "howmany": "6"
+        },
+        {
+            "name": "former commando",
+            "howmany": "1"
+        },
+        {
+            "name": "cryoberos",
+            "howmany": "6"
+        },
+        {
+            "name": "corrupted commando",
+            "howmany": "6"
+        },
+        {
+            "name": "toxiberos",
+            "howmany": "1"
+        },
+        {
+            "name": "former CRI commando",
+            "howmany": "2"
+        },
+        {
+            "name": "medusa",
+            "howmany": "1"
+        },
+        {
+            "name": "corrupted heavy",
+            "howmany": "6"
+        },
+        {
+            "name": "ravager",
+            "howmany": "3"
+        },
+        {
+            "name": "security drone",
+            "howmany": "17"
+        },
+        {
+            "name": "armored ravager",
+            "howmany": "8"
+        },
+        {
+            "name": "combat drone",
+            "howmany": "4"
+        },
+        {
+            "name": "siege ravager",
+            "howmany": "3"
+        },
+        {
+            "name": "military drone",
+            "howmany": "4"
+        },
+        {
+            "name": "plasma ravager",
+            "howmany": "2"
+        },
+        {
+            "name": "fiend",
+            "howmany": "25"
+        },
+        {
+            "name": "CRI marine",
+            "howmany": "9"
+        },
+        {
+            "name": "fire fiend",
+            "howmany": "11"
+        },
+        {
+            "name": "CRI bot",
+            "howmany": "3"
+        },
+        {
+            "name": "ice fiend",
+            "howmany": "31"
+        }
+    ],
     "traits": [
-        "Jug",
-        "Cov",
-        "Pow",
-        "Tox",
-        "SF",
-        "Cov",
-        "MEN",
-        "Whk",
-        "Hor",
-        "Hor",
-        "Hor",
-        "Jug",
-        "Jug"
+        {
+            "short_name": "Jug",
+            "order": 1,
+            "level": 1
+        },
+        {
+            "short_name": "Cov",
+            "order": 2,
+            "level": 1
+        },
+        {
+            "short_name": "Pow",
+            "order": 3,
+            "level": 1
+        },
+        {
+            "short_name": "Tox",
+            "order": 4,
+            "level": 1
+        },
+        {
+            "short_name": "SF",
+            "order": 5,
+            "level": 1
+        },
+        {
+            "short_name": "Cov",
+            "order": 6,
+            "level": 2
+        },
+        {
+            "short_name": "MEN",
+            "order": 7,
+            "level": 1
+        },
+        {
+            "short_name": "Whk",
+            "order": 8,
+            "level": 1
+        },
+        {
+            "short_name": "Hor",
+            "order": 9,
+            "level": 1
+        },
+        {
+            "short_name": "Hor",
+            "order": 10,
+            "level": 2
+        },
+        {
+            "short_name": "Hor",
+            "order": 11,
+            "level": 3
+        },
+        {
+            "short_name": "Jug",
+            "order": 12,
+            "level": 2
+        },
+        {
+            "short_name": "Jug",
+            "order": 13,
+            "level": 3
+        }
     ],
     "equipment": [
         {
@@ -324,19 +509,58 @@
             ]
         }
     ],
-    "inventory": {
-        "energy cell": 94,
-        "rocket": 6,
-        "7.62 ammo": 71,
-        "accuracy mod pack": 1,
-        "plasma grenade": 2,
-        "gas grenade": 3,
-        "krak grenade": 1,
-        "frag grenade": 1,
-        "CRI phase kit": 3,
-        "multitool": 3,
-        "military stimpack": 1,
-        "large medkit": 3,
-        "red keycard": 3
-    }
+    "inventory": [
+        {
+            "item": "energy cell",
+            "howmany": 94
+        },
+        {
+            "item": "rocket",
+            "howmany": 6
+        },
+        {
+            "item": "7.62 ammo",
+            "howmany": 71
+        },
+        {
+            "item": "accuracy mod pack",
+            "howmany": 1
+        },
+        {
+            "item": "plasma grenade",
+            "howmany": 2
+        },
+        {
+            "item": "gas grenade",
+            "howmany": 3
+        },
+        {
+            "item": "krak grenade",
+            "howmany": 1
+        },
+        {
+            "item": "frag grenade",
+            "howmany": 1
+        },
+        {
+            "item": "CRI phase kit",
+            "howmany": 3
+        },
+        {
+            "item": "multitool",
+            "howmany": 3
+        },
+        {
+            "item": "military stimpack",
+            "howmany": 1
+        },
+        {
+            "item": "large medkit",
+            "howmany": 3
+        },
+        {
+            "item": "red keycard",
+            "howmany": 3
+        }
+    ]
 }

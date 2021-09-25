@@ -84,27 +84,38 @@ class MortemParser:
             right = grp[1].strip()
             if left not in data['visited_locations']:
                 order += 1
-                data['visited_locations'][left] = {'order': order, 'event': None}
+                data['visited_locations'][left] = {'name': left, 'order': order, 'event': None}
             if right.startswith('>'):
                 order += 1
-                data['visited_locations'][right[1:].strip()] = {'order': order, 'event': None}
+                data['visited_locations'][right[1:].strip()] = {'name': right[1:].strip(), 'order': order, 'event': None}
             else:
                 data['visited_locations'][left]['event'] = right
         if last_location and last_location not in data['visited_locations']:
-            data['visited_locations'][last_location] = {'order': order+1, 'event': None}
+            data['visited_locations'][last_location] = {'name': last_location, 'order': order+1, 'event': None}
+        # Convert dict to list
+        data['visited_locations'] = list(data['visited_locations'].values())
 
         totenemies = re.compile(r'He killed \d+ out of (\d+) enemies.')
         data['total_enemies'] = int(re.search(totenemies, self._mortem).groups()[0])
         
         killpattern = re.compile(r'(?:^ |\s{3})(\d+)\s{1,2}(\w+(?: \w+)*)', re.MULTILINE)
         kill_groups = re.findall(killpattern, self._mortem)
-        data['kills'] = dict()
+        data['kills'] = []
         for grp in kill_groups:
             monster_name = self.convert_to_singular(grp[1])
-            data['kills'][monster_name] = grp[0] 
+            data['kills'].append({'name': monster_name, 'howmany': grp[0]})
 
         traitpattern = re.compile(r'(?<=^  |->)*?(\w+)(?=->|\n\nEquipment)', re.MULTILINE)
-        data['traits'] = re.findall(traitpattern, self._mortem)
+        traits_list = re.findall(traitpattern, self._mortem)
+        # Convert list to deserializable list of dicts
+        data['traits'] = []
+        traits_count = dict()
+        for trait in traits_list:
+            if trait not in traits_count:
+                traits_count[trait] = 1
+            else:
+                traits_count[trait] += 1
+            data['traits'].append({'short_name': trait, 'order': len(data['traits'])+1, 'level': traits_count[trait]})
 
         equipattern = re.compile(r'(?:^  Slot #|^  )(\d|Body|Head|Utility|Relic) +:( AV1| AV2| ENV)? ?(\S+(?: [^ \+ABP]+| AMP)*) ?([\+ABP\d]+)?\n((?:   \* )(?:.+\n)+)?', re.MULTILINE)
         equip_lines = re.findall(equipattern, self._mortem)
@@ -145,7 +156,8 @@ class MortemParser:
                 inventory[split_line[0]] += int(split_line[1])
             except IndexError:
                 inventory[split_line[0]] += 1 # There is no count for this inventory line
-        data['inventory'] = inventory            
+        # convert dict to deserializable format
+        data['inventory'] = [{'item': k, 'howmany': v} for k,v in inventory.items()]
 
         self.data = data
         return data
