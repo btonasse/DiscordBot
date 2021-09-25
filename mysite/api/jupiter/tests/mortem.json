@@ -8,13 +8,13 @@
     "run_time": "1:59:9",
     "seed": 6756,
     "points": 2254,
-    "difficulty": "MEDIUM",
+    "difficulty": "M",
     "visited_locations": {
         "CALLISTO L2": {
             "order": 1,
             "event": "Lockdown"
         },
-        " Valhalla Terminal L1": {
+        "Valhalla Terminal L1": {
             "order": 2,
             "event": null
         },
@@ -22,82 +22,78 @@
             "order": 3,
             "event": "Lockdown"
         },
-        " Valhalla Command": {
-            "order": 4,
-            "event": null
-        },
         "Valhalla Command": {
-            "order": 5,
+            "order": 4,
             "event": "Cleared!"
         },
         "Europa Concourse": {
-            "order": 6,
+            "order": 5,
             "event": "Low Power"
         },
-        " Europa Dig Zone L1": {
-            "order": 7,
+        "Europa Dig Zone L1": {
+            "order": 6,
             "event": null
         },
         "Europa Dig Zone L2": {
-            "order": 8,
+            "order": 7,
             "event": "Exalted Summons"
         },
         "IO L3": {
+            "order": 8,
+            "event": null
+        },
+        "Shadow Halls L1": {
             "order": 9,
             "event": null
         },
-        " Shadow Halls L1": {
-            "order": 10,
-            "event": null
-        },
         "Shadow Halls L2": {
-            "order": 11,
+            "order": 10,
             "event": "Exalted Curse"
         }
     },
     "total_enemies": 362,
     "kills": {
-        "former grunts": "40",
-        "toxic fiends": "2",
-        "corrupted grunts": "12",
-        "CalSec sentries": "21",
-        "former CRI grunts": "4",
-        "security sentries": "5",
-        "former soldiers": "14",
-        "CalSec bots": "10",
-        "corrupted soldiers": "22",
-        "security bots": "3",
+        "former grunt": "40",
+        "toxic fiend": "2",
+        "corrupted grunt": "12",
+        "CalSec sentry": "21",
+        "former CRI grunt": "4",
+        "security sentry": "5",
+        "former soldier": "14",
+        "CalSec bot": "10",
+        "corrupted soldier": "22",
+        "security bot": "3",
         "former CRI soldier": "1",
         "military bot": "1",
-        "former sergeants": "7",
+        "former sergeant": "7",
         "guardian bot": "1",
         "corrupted sergeant": "1",
-        "reavers": "8",
-        "former CRI sergeants": "2",
-        "cryoreavers": "12",
-        "former guards": "12",
-        "toxic reavers": "2",
-        "corrupted guards": "6",
-        "archreavers": "6",
+        "reaver": "8",
+        "former CRI sergeant": "2",
+        "cryoreaver": "12",
+        "former guard": "12",
+        "toxic reaver": "2",
+        "corrupted guard": "6",
+        "archreaver": "6",
         "former commando": "1",
-        "cryoberi": "6",
-        "corrupted commandoes": "6",
+        "cryoberos": "6",
+        "corrupted commando": "6",
         "toxiberos": "1",
-        "former CRI commandoes": "2",
+        "former CRI commando": "2",
         "medusa": "1",
-        "corrupted heavies": "6",
-        "ravagers": "3",
-        "security drones": "17",
-        "armored ravagers": "8",
-        "combat drones": "4",
-        "siege ravagers": "3",
-        "military drones": "4",
-        "plasma ravagers": "2",
-        "fiends": "25",
-        "CRI marines": "9",
-        "fire fiends": "11",
-        "CRI bots": "3",
-        "ice fiends": "31"
+        "corrupted heavy": "6",
+        "ravager": "3",
+        "security drone": "17",
+        "armored ravager": "8",
+        "combat drone": "4",
+        "siege ravager": "3",
+        "military drone": "4",
+        "plasma ravager": "2",
+        "fiend": "25",
+        "CRI marine": "9",
+        "fire fiend": "11",
+        "CRI bot": "3",
+        "ice fiend": "31"
     },
     "traits": [
         "Jug",
@@ -114,8 +110,9 @@
         "Jug",
         "Jug"
     ],
-    "equipment": {
-        "Calibrated": {
+    "equipment": [
+        {
+            "name": "7.62 assault rifle",
             "slot": 2,
             "rarity": " AV1",
             "mod_code": "+A2",
@@ -138,7 +135,8 @@
                 }
             ]
         },
-        "Auto-calibrated": {
+        {
+            "name": "7.62 assault rifle",
             "slot": 2,
             "rarity": " AV1",
             "mod_code": "+A2",
@@ -161,7 +159,8 @@
                 }
             ]
         },
-        "Stabilized": {
+        {
+            "name": "7.62 assault rifle",
             "slot": 2,
             "rarity": " AV1",
             "mod_code": "+A2",
@@ -184,7 +183,8 @@
                 }
             ]
         },
-        "Hunter": {
+        {
+            "name": "7.62 assault rifle",
             "slot": 2,
             "rarity": " AV1",
             "mod_code": "+A2",
@@ -207,7 +207,8 @@
                 }
             ]
         },
-        "Ripper": {
+        {
+            "name": "katana",
             "slot": 3,
             "rarity": null,
             "mod_code": "PBA",
@@ -226,7 +227,8 @@
                 }
             ]
         },
-        "Swap Harness": {
+        {
+            "name": "katana",
             "slot": 3,
             "rarity": null,
             "mod_code": "PBA",
@@ -245,7 +247,8 @@
                 }
             ]
         },
-        "Mechabane": {
+        {
+            "name": "katana",
             "slot": 3,
             "rarity": null,
             "mod_code": "PBA",
@@ -264,7 +267,8 @@
                 }
             ]
         },
-        "Fire-resistant": {
+        {
+            "name": "duramesh scout armor",
             "slot": null,
             "rarity": null,
             "mod_code": "B",
@@ -279,7 +283,8 @@
                 }
             ]
         },
-        "Duramesh": {
+        {
+            "name": "duramesh scout armor",
             "slot": null,
             "rarity": null,
             "mod_code": "B",
@@ -294,7 +299,8 @@
                 }
             ]
         },
-        "Auto accelerator": {
+        {
+            "name": "auto AMP",
             "slot": null,
             "rarity": " AV1",
             "mod_code": null,
@@ -305,7 +311,8 @@
                 }
             ]
         },
-        "Bloody Tears": {
+        {
+            "name": "reaver's claw",
             "slot": null,
             "rarity": null,
             "mod_code": null,
@@ -316,7 +323,7 @@
                 }
             ]
         }
-    },
+    ],
     "inventory": {
         "energy cell": 94,
         "rocket": 6,

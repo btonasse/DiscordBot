@@ -26,6 +26,20 @@ class MortemParser:
             content = file.read()
         return content
 
+    def convert_to_singular(self, name: str) -> str:
+        '''
+        Converts a name potentially in plural form to its singular form
+        '''
+        if name.endswith('i'):
+            name = name[:-1] + 'os'
+        elif name.endswith('oes'):
+            name = name[:-2]
+        elif name.endswith('ies'):
+            name = name[:-3] + 'y'
+        elif name.endswith('s') and not name.endswith('os'):
+            name = name[:-1]
+        return name
+
     def parse(self) -> dict:
         '''
         Parses mortem file and populates self.data with all necessary datapoints to create a new character instance
@@ -41,6 +55,7 @@ class MortemParser:
         if match:
             data['won'] = False
             last_location, data['killed_by'] = match.groups()
+            
         else:
             data['won'] = True
             last_location = data['killed_by'] = None
@@ -58,7 +73,7 @@ class MortemParser:
         data['points'] = int(re.search(line7, self._mortem).groups()[0])
 
         line8 = re.compile(r'He took (.+) risks.')
-        data['difficulty'] = re.search(line8, self._mortem).groups()[0]
+        data['difficulty'] = re.search(line8, self._mortem).groups()[0][0]
 
         locpattern = re.compile(r'^(\w+(?: \w+)*) -(.*)$', re.MULTILINE)
         loc_groups = re.findall(locpattern, self._mortem)
@@ -72,7 +87,7 @@ class MortemParser:
                 data['visited_locations'][left] = {'order': order, 'event': None}
             if right.startswith('>'):
                 order += 1
-                data['visited_locations'][right[1:]] = {'order': order, 'event': None}
+                data['visited_locations'][right[1:].strip()] = {'order': order, 'event': None}
             else:
                 data['visited_locations'][left]['event'] = right
         if last_location and last_location not in data['visited_locations']:
@@ -85,21 +100,22 @@ class MortemParser:
         kill_groups = re.findall(killpattern, self._mortem)
         data['kills'] = dict()
         for grp in kill_groups:
-            data['kills'][grp[1]] = grp[0] 
+            monster_name = self.convert_to_singular(grp[1])
+            data['kills'][monster_name] = grp[0] 
 
         traitpattern = re.compile(r'(?<=^  |->)*?(\w+)(?=->|\n\nEquipment)', re.MULTILINE)
         data['traits'] = re.findall(traitpattern, self._mortem)
 
         equipattern = re.compile(r'(?:^  Slot #|^  )(\d|Body|Head|Utility|Relic) +:( AV1| AV2| ENV)? ?(\S+(?: [^ \+ABP]+| AMP)*) ?([\+ABP\d]+)?\n((?:   \* )(?:.+\n)+)?', re.MULTILINE)
         equip_lines = re.findall(equipattern, self._mortem)
-        data['equipment'] = dict()
+        data['equipment'] = []
         for line in equip_lines:
             if all(char in '0123456789' for char in line[0]):
                 slot = int(line[0])
             else:
                 slot = None
             rarity = line[1] or None
-            name = line[2]
+            equip_name = line[2]
             mod_code = line[3] or None
             # Build perk list
             perks_raw = [perk.lstrip('   * ') for perk in line[4].split('\n') if perk] 
@@ -115,7 +131,7 @@ class MortemParser:
                         level = None
                         name = ' '.join(split_name)
                     perks.append({'name': name, 'level': level})
-                data['equipment'][name] = {'slot': slot, 'rarity': rarity, 'mod_code': mod_code, 'perks': perks}
+                data['equipment'].append ({'name': equip_name, 'slot': slot, 'rarity': rarity, 'mod_code': mod_code, 'perks': perks})
 
         invpattern = re.compile(r'(?<=Inventory\n)(.+)', re.DOTALL)
         inv_lines = re.search(invpattern, self._mortem).groups()[0].splitlines()
