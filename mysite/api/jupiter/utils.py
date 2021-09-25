@@ -130,7 +130,8 @@ class MortemParser:
         self.data = data
         return data
         
-
-x = MortemParser('test.txt')
-data = x.parse()
-print(json.dumps(data, indent=2))
+if __name__ == '__main__':
+    import json
+    x = MortemParser('tests/mortem.txt')
+    data = x.parse()
+    print(json.dumps(data, indent=1))
