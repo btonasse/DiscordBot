@@ -5,37 +5,30 @@ class MonsterSerializer(serializers.ModelSerializer):
     class Meta:
         model = md.Monster
         fields = '__all__'
-
 class LocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = md.Location
         fields = '__all__'
-
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = md.Item
         fields = '__all__'
-
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = md.Event
         fields = '__all__'
-
 class AwardSerializer(serializers.ModelSerializer):
     class Meta:
         model = md.Award
-        fields = '__all__'
-
+        fields = ['name']
 class KlassSerializer(serializers.ModelSerializer):
     class Meta:
         model = md.Klass
         fields = '__all__'
-
 class TraitSerializer(serializers.ModelSerializer):
     class Meta:
         model = md.Trait
         fields = ['short_name']
-
 class PerkSerializer(serializers.ModelSerializer):
     class Meta:
         model = md.Perk
@@ -76,6 +69,51 @@ class CharacterEquipmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = md.CharacterEquipment
         fields = ['name', 'slot', 'rarity', 'mod_code', 'perks']
+
+class CharacterSerializer(serializers.ModelSerializer): 
+    klass = serializers.SlugRelatedField(queryset=md.Klass.objects.all(), slug_field='name')
+    killed_by = serializers.SlugRelatedField(queryset=md.Monster.objects.all(), slug_field='name')
+    awards = AwardSerializer(many=True, required=False)
+    traits = CharacterTraitSerializer(source='charactertrait_set', many=True)
+    kills = CharacterKillSerializer(source='characterkill_set', many=True)
+    visited_locations = CharacterLocationSerializer(source='characterlocation_set', many=True)
+    inventory = CharacterInventorySerializer(source='characterinventory_set', many=True)
+    equipment = CharacterEquipmentSerializer(source='characterequipment_set', many=True)
+    
+    def create(self, validated_data):
+        awards = validated_data.pop('award_set', [])
+        traits = validated_data.pop('charactertrait_set', [])
+        kills = validated_data.pop('characterkill_set', [])
+        visited_locations = validated_data.pop('characterlocation_set', [])
+        inventory = validated_data.pop('characterinventory_set', [])
+        equipment = validated_data.pop('characterequipment_set', [])
+        
+        character = md.Character.objects.create(**validated_data)
+        #for award in awards:
+        #    award_obj = md.Award.objects.get()
+        #    character.awards.add(award)
+        for trait in traits:
+            md.CharacterTrait.objects.create(character=character, **trait)
+        for kill in kills:
+            md.CharacterKill.objects.create(character=character, **kill)
+        for loc in visited_locations:
+            md.CharacterLocation.objects.create(character=character, **loc)
+        for item in inventory:
+            md.CharacterInventory.objects.create(character=character, **item)
+        for char_equip in equipment:
+            perks = char_equip.pop('equipmentperk_set', [])
+            charequip_obj = md.CharacterEquipment.objects.create(character=character, **char_equip)
+            for perk in perks:
+                md.EquipmentPerk.objects.create(character_equipment=charequip_obj, **perk)
+        return character
+    def update(self, instance, validated_data):
+        return super().update(instance, validated_data)
+
+    class Meta:
+        model = md.Character
+        fields = ['id', 'name', 'level', 'klass', 'won', 'turns_survived', 'killed_by', 'run_time', 'seed', 'points', 'difficulty', 'total_enemies', 'awards', 'visited_locations', 'traits', 'kills', 'equipment', 'inventory']
+
+'''
 class PerksRelatedField(serializers.RelatedField):
     def to_representation(self, value):
         name = value.perk.name
@@ -153,12 +191,6 @@ class PrettyCharacterSerializer(serializers.ModelSerializer): #Pretty version, b
     equipment = CharacterEquipmentSerializer(source='characterequipment_set', many=True)
     
     def create(self, validated_data):
-        '''awards = validated_data.pop('awards', [])
-        traits = validated_data.pop('traits', [])
-        kills = validated_data.pop('kills', [])
-        visited_locations = validated_data.pop('visited_locations', [])
-        inventory = validated_data.pop('inventory', [])
-        equipment = validated_data.pop('equipment', [])'''
         awards = validated_data.pop('awards', [])
         traits = validated_data.pop('charactertrait_set', [])
         kills = validated_data.pop('characterkill_set', [])
@@ -174,36 +206,4 @@ class PrettyCharacterSerializer(serializers.ModelSerializer): #Pretty version, b
     class Meta:
         model = md.Character
         fields = ['id', 'name', 'level', 'klass', 'won', 'turns_survived', 'killed_by', 'run_time', 'seed', 'points', 'difficulty', 'total_enemies', 'awards', 'visited_locations', 'traits', 'kills', 'equipment', 'inventory']
-
-class CharacterSerializer(serializers.ModelSerializer): 
-    klass = serializers.SlugRelatedField(queryset=md.Klass.objects.all(), slug_field='name')
-    killed_by = serializers.SlugRelatedField(queryset=md.Monster.objects.all(), slug_field='name')
-    awards = AwardSerializer(many=True, required=False)
-    traits = CharacterTraitSerializer(source='charactertrait_set', many=True)
-    kills = CharacterKillSerializer(source='characterkill_set', many=True)
-    visited_locations = CharacterLocationSerializer(source='characterlocation_set', many=True)
-    inventory = CharacterInventorySerializer(source='characterinventory_set', many=True)
-    equipment = CharacterEquipmentSerializer(source='characterequipment_set', many=True)
-    
-    def create(self, validated_data):
-        '''awards = validated_data.pop('awards', [])
-        traits = validated_data.pop('traits', [])
-        kills = validated_data.pop('kills', [])
-        visited_locations = validated_data.pop('visited_locations', [])
-        inventory = validated_data.pop('inventory', [])
-        equipment = validated_data.pop('equipment', [])'''
-        awards = validated_data.pop('awards', [])
-        traits = validated_data.pop('charactertrait_set', [])
-        kills = validated_data.pop('characterkill_set', [])
-        visited_locations = validated_data.pop('characterlocation_set', [])
-        inventory = validated_data.pop('characterinventory_set', [])
-        equipment = validated_data.pop('characterequipment_set', [])
-        
-        character = md.Character.objects.create(**validated_data)
-        return character
-    def update(self, instance, validated_data):
-        return super().update(instance, validated_data)
-
-    class Meta:
-        model = md.Character
-        fields = ['id', 'name', 'level', 'klass', 'won', 'turns_survived', 'killed_by', 'run_time', 'seed', 'points', 'difficulty', 'total_enemies', 'awards', 'visited_locations', 'traits', 'kills', 'equipment', 'inventory']
+'''
