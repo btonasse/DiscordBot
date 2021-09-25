@@ -125,8 +125,12 @@ class CharacterEquipment(models.Model):
         unique_together = [['character', 'slot']]
     def __str__(self):
         if self.rarity:
-            return f"Char {self.character.id}: {self.rarity} {self.equipment.name}"
-        return f"Char {self.character.id}: {self.equipment.name}"
+            name = f"Char {self.character.id}: {self.rarity} {self.equipment.name}"
+        else:
+            name = f"Char {self.character.id}: {self.equipment.name}"
+        if self.mod_code:
+            name += f" {self.mod_code}"
+        return name
 
 class EquipmentPerk(models.Model):
     character_equipment = models.ForeignKey(CharacterEquipment, on_delete=models.CASCADE)
