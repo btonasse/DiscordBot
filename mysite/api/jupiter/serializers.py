@@ -1,4 +1,4 @@
-from rest_framework import serializers
+from rest_framework import serializers, validators
 import api.jupiter.models as md
 from django.db import transaction
 
@@ -132,13 +132,21 @@ class CharacterSerializer(serializers.ModelSerializer):
             'points',
             'difficulty',
             'total_enemies',
-            'uploaded_timestamp',
+            'last_modified',
+            'mortem_timestamp',
             'awards',
             'visited_locations',
             'traits',
             'kills',
             'equipment',
             'inventory'
+        ]
+        validators = [
+            validators.UniqueTogetherValidator(
+                queryset=md.Character.objects.all(),
+                fields=['name', 'mortem_timestamp'],
+                message='This character is not unique (name and mortem_timestamp are not unique together)'
+            )
         ]
 
 '''

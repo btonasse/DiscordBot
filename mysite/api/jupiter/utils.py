@@ -2,6 +2,7 @@ import re
 from pathlib import Path
 import json
 import os
+from datetime import datetime
 class MortemParser:
     '''
     Parses a mortem.txt file generated after a Jupiter Hell run finishes
@@ -11,12 +12,15 @@ class MortemParser:
             self._filepath = Path(filepath).resolve()
         else:
             self._filepath = Path(os.getenv('JUPITER_MORTEM')).resolve()
-        self._mortem = self._load_file()
+        self._mortem = None
+        self._last_modified = None
+        self._load_file()
         self.data = dict()
 
     def _load_file(self) -> str:
         '''
         Load contents of mortem file onto self.mortem
+        Also loads the file last modified timestamp
         '''
         if not self._filepath.is_file():
             raise FileNotFoundError
@@ -24,7 +28,9 @@ class MortemParser:
             raise ValueError('Only txt files accepted.')
         with self._filepath.open('r') as file:
             content = file.read()
-        return content
+        self._mortem = content
+        self._last_modified = datetime.fromtimestamp(self._filepath.stat().st_mtime)
+
 
     def convert_to_singular(self, name: str) -> str:
         '''
@@ -165,6 +171,9 @@ class MortemParser:
         # convert dict to deserializable format
         data['inventory'] = [{'item': k, 'howmany': v} for k,v in inventory.items()]
 
+        # add file creation timestamp
+        data['mortem_timestamp'] = datetime.strftime(self._last_modified, '%Y-%m-%dT%H:%M:%S%z')
+        
         self.data = data
         return data
         

@@ -107,9 +107,16 @@ class Character(models.Model):
     equipment = models.ManyToManyField(Equipment, through='CharacterEquipment', blank=True)
     inventory = models.ManyToManyField(Item, through='CharacterInventory', blank=True)
     visited_locations = models.ManyToManyField(Location, through='CharacterLocation')
-    uploaded_timestamp = models.DateTimeField(default=datetime.now())
+    last_modified = models.DateTimeField(default=datetime.now())
+    mortem_timestamp = models.DateTimeField(default=datetime.now())
     class Meta:
         ordering = ['name']
+        constraints = [
+            models.constraints.UniqueConstraint(
+                fields = ['name', 'mortem_timestamp'],
+                name = 'unique_mortem'
+            )
+        ]
     def __str__(self):
         return f"{self.id}: {self.name} - {self.difficulty}{self.klass.code}"
 
