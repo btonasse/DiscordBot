@@ -53,3 +53,4 @@ venv.bak/
 *.sqlite3
 
 Pipfile.lock
+node_modules
