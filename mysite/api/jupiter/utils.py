@@ -42,6 +42,8 @@ class MortemParser:
             name = name[:-2]
         elif name.endswith('ies'):
             name = name[:-3] + 'y'
+        elif name.endswith('ae'):
+            name = name[:-1]
         elif name.endswith('s') and not name.endswith('os'):
             name = name[:-1]
         return name
@@ -129,7 +131,7 @@ class MortemParser:
                 traits_count[trait] += 1
             data['traits'].append({'short_name': trait, 'order': len(data['traits'])+1, 'level': traits_count[trait]})
 
-        equipattern = re.compile(r'(?:^  Slot #|^  )(\d|Body|Head|Utility|Relic) +:( AV1| AV2| AV3| ENV)? ?(\S+(?: [^ \+ABP]+| AMP)*) ?([\+ABP\d]+)?\n((?:   \* )(?:.+\n)+)?', re.MULTILINE)
+        equipattern = re.compile(r'(?:^  Slot #|^  )(\d|Body|Head|Utility|Relic) +:( AV1| AV2| AV3)? ?(\S+(?: [^ \+ABP]+| AMP)*) ?([\+ABP\d]+)?\n((?:   \* )(?:.+\n)+)?', re.MULTILINE)
         equip_lines = re.findall(equipattern, self._mortem)
         data['equipment'] = []
         for line in equip_lines:
@@ -148,7 +150,7 @@ class MortemParser:
                 if perk:
                     split_name = perk.split()
                     try:
-                        level = int(split_name[-1])
+                        level = int(split_name[-1].replace('%', ''))
                         name = ' '.join(split_name[:-1])
                     except ValueError:
                         level = None
