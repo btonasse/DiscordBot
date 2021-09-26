@@ -1,5 +1,6 @@
-from rest_framework import serializers
+from rest_framework import serializers, validators
 import api.jupiter.models as md
+from django.db import transaction
 
 class MonsterSerializer(serializers.ModelSerializer):
     class Meta:
@@ -80,6 +81,7 @@ class CharacterSerializer(serializers.ModelSerializer):
     inventory = CharacterInventorySerializer(source='characterinventory_set', many=True)
     equipment = CharacterEquipmentSerializer(source='characterequipment_set', many=True)
     
+    @transaction.atomic
     def create(self, validated_data):
         awards = validated_data.pop('award_set', [])
         traits = validated_data.pop('charactertrait_set', [])
@@ -92,19 +94,22 @@ class CharacterSerializer(serializers.ModelSerializer):
         #for award in awards:
         #    award_obj = md.Award.objects.get()
         #    character.awards.add(award)
-        for trait in traits:
-            md.CharacterTrait.objects.create(character=character, **trait)
-        for kill in kills:
-            md.CharacterKill.objects.create(character=character, **kill)
-        for loc in visited_locations:
-            md.CharacterLocation.objects.create(character=character, **loc)
-        for item in inventory:
-            md.CharacterInventory.objects.create(character=character, **item)
-        for char_equip in equipment:
-            perks = char_equip.pop('equipmentperk_set', [])
-            charequip_obj = md.CharacterEquipment.objects.create(character=character, **char_equip)
-            for perk in perks:
-                md.EquipmentPerk.objects.create(character_equipment=charequip_obj, **perk)
+        try:
+            for trait in traits:
+                md.CharacterTrait.objects.create(character=character, **trait)
+            for kill in kills:
+                md.CharacterKill.objects.create(character=character, **kill)
+            for loc in visited_locations:
+                md.CharacterLocation.objects.create(character=character, **loc)
+            for item in inventory:
+                md.CharacterInventory.objects.create(character=character, **item)
+            for char_equip in equipment:
+                perks = char_equip.pop('equipmentperk_set', [])
+                charequip_obj = md.CharacterEquipment.objects.create(character=character, **char_equip)
+                for perk in perks:
+                    md.EquipmentPerk.objects.create(character_equipment=charequip_obj, **perk)
+        except Exception as er:
+            raise serializers.ValidationError(f'Oops, something went wrong: {er}')
         return character
     def update(self, instance, validated_data):
         return super().update(instance, validated_data)
