@@ -53,4 +53,9 @@ venv.bak/
 *.sqlite3
 
 Pipfile.lock
+<<<<<<< HEAD
+=======
+
+# Node
+>>>>>>> development
 node_modules
