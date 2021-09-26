@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 
 class Monster(models.Model):
     name = models.CharField(max_length=64, unique=True)
@@ -106,6 +107,7 @@ class Character(models.Model):
     equipment = models.ManyToManyField(Equipment, through='CharacterEquipment', blank=True)
     inventory = models.ManyToManyField(Item, through='CharacterInventory', blank=True)
     visited_locations = models.ManyToManyField(Location, through='CharacterLocation')
+    uploaded_timestamp = models.DateTimeField(default=datetime.now())
     class Meta:
         ordering = ['name']
     def __str__(self):

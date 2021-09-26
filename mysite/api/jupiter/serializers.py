@@ -1,4 +1,4 @@
-from rest_framework import serializers, validators
+from rest_framework import serializers
 import api.jupiter.models as md
 from django.db import transaction
 
@@ -116,7 +116,27 @@ class CharacterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = md.Character
-        fields = ['id', 'name', 'level', 'klass', 'won', 'turns_survived', 'killed_by', 'run_time', 'seed', 'points', 'difficulty', 'total_enemies', 'awards', 'visited_locations', 'traits', 'kills', 'equipment', 'inventory']
+        fields = [
+            'id',
+            'name',
+            'level',
+            'klass',
+            'won',
+            'turns_survived',
+            'killed_by',
+            'run_time',
+            'seed',
+            'points',
+            'difficulty',
+            'total_enemies',
+            'uploaded_timestamp',
+            'awards',
+            'visited_locations',
+            'traits',
+            'kills',
+            'equipment',
+            'inventory'
+        ]
 
 '''
 class PerksRelatedField(serializers.RelatedField):
