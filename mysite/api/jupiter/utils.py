@@ -117,7 +117,7 @@ class MortemParser:
                 traits_count[trait] += 1
             data['traits'].append({'short_name': trait, 'order': len(data['traits'])+1, 'level': traits_count[trait]})
 
-        equipattern = re.compile(r'(?:^  Slot #|^  )(\d|Body|Head|Utility|Relic) +:( AV1| AV2| ENV)? ?(\S+(?: [^ \+ABP]+| AMP)*) ?([\+ABP\d]+)?\n((?:   \* )(?:.+\n)+)?', re.MULTILINE)
+        equipattern = re.compile(r'(?:^  Slot #|^  )(\d|Body|Head|Utility|Relic) +:( AV1| AV2| AV3| ENV)? ?(\S+(?: [^ \+ABP]+| AMP)*) ?([\+ABP\d]+)?\n((?:   \* )(?:.+\n)+)?', re.MULTILINE)
         equip_lines = re.findall(equipattern, self._mortem)
         data['equipment'] = []
         for line in equip_lines:
