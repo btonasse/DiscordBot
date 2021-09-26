@@ -1,119 +1,128 @@
 {
-    "name": "Bolso",
-    "level": 14,
-    "klass": "Technician",
+    "name": "Testudo",
+    "level": 11,
+    "klass": "Scout",
     "won": false,
-    "killed_by": "exalted ravager",
-    "turns_survived": 9037,
-    "run_time": "1:59:9",
-    "seed": 6756,
-    "points": 2254,
+    "killed_by": "former CRI soldier",
+    "turns_survived": 7459,
+    "run_time": "1:30:7",
+    "seed": 4247,
+    "points": 2030,
     "difficulty": "M",
     "visited_locations": [
         {
             "name": "CALLISTO L2",
             "order": 1,
-            "event": "Lockdown"
+            "event": "Infestation"
         },
         {
-            "name": "Valhalla Terminal L1",
+            "name": "CALLISTO L5",
             "order": 2,
             "event": null
         },
         {
-            "name": "Valhalla Terminal L3",
+            "name": "Military Barracks",
             "order": 3,
-            "event": "Lockdown"
-        },
-        {
-            "name": "Valhalla Command",
-            "order": 4,
             "event": "Cleared!"
         },
         {
-            "name": "Europa Concourse",
-            "order": 5,
-            "event": "Low Power"
+            "name": "CALLISTO L6",
+            "order": 4,
+            "event": "Secure Vault"
         },
         {
-            "name": "Europa Dig Zone L1",
+            "name": "EUROPA L2",
+            "order": 5,
+            "event": null
+        },
+        {
+            "name": "Europa Ruins L1",
             "order": 6,
             "event": null
         },
         {
-            "name": "Europa Dig Zone L2",
+            "name": "Europa Ruins L3",
             "order": 7,
             "event": "Exalted Summons"
         },
         {
-            "name": "IO L3",
+            "name": "Frozen Temple",
             "order": 8,
-            "event": null
+            "event": "Cleared!"
         },
         {
-            "name": "Shadow Halls L1",
+            "name": "IO L2",
             "order": 9,
-            "event": null
-        },
-        {
-            "name": "Shadow Halls L2",
-            "order": 10,
-            "event": "Exalted Curse"
+            "event": "Volatile Storage"
         }
     ],
-    "total_enemies": 362,
+    "awards": [
+        {
+            "name": "CRI Star",
+            "typ": "bronze"
+        }
+    ],
+    "total_enemies": 306,
     "kills": [
         {
             "name": "former grunt",
-            "howmany": "40"
+            "howmany": "26"
         },
         {
-            "name": "toxic fiend",
-            "howmany": "2"
-        },
-        {
-            "name": "corrupted grunt",
-            "howmany": "12"
-        },
-        {
-            "name": "CalSec sentry",
+            "name": "fiend",
             "howmany": "21"
         },
         {
+            "name": "hellish grunt",
+            "howmany": "1"
+        },
+        {
+            "name": "fire fiend",
+            "howmany": "18"
+        },
+        {
             "name": "former CRI grunt",
-            "howmany": "4"
+            "howmany": "2"
+        },
+        {
+            "name": "ice fiend",
+            "howmany": "27"
+        },
+        {
+            "name": "former soldier",
+            "howmany": "11"
+        },
+        {
+            "name": "CalSec sentry",
+            "howmany": "6"
+        },
+        {
+            "name": "corrupted soldier",
+            "howmany": "14"
         },
         {
             "name": "security sentry",
             "howmany": "5"
         },
         {
-            "name": "former soldier",
-            "howmany": "14"
+            "name": "hellish soldier",
+            "howmany": "5"
         },
         {
             "name": "CalSec bot",
-            "howmany": "10"
-        },
-        {
-            "name": "corrupted soldier",
-            "howmany": "22"
-        },
-        {
-            "name": "security bot",
             "howmany": "3"
         },
         {
             "name": "former CRI soldier",
-            "howmany": "1"
+            "howmany": "3"
         },
         {
-            "name": "military bot",
-            "howmany": "1"
+            "name": "security bot",
+            "howmany": "10"
         },
         {
             "name": "former sergeant",
-            "howmany": "7"
+            "howmany": "10"
         },
         {
             "name": "guardian bot",
@@ -121,251 +130,193 @@
         },
         {
             "name": "corrupted sergeant",
-            "howmany": "1"
+            "howmany": "3"
         },
         {
             "name": "reaver",
-            "howmany": "8"
+            "howmany": "2"
         },
         {
-            "name": "former CRI sergeant",
-            "howmany": "2"
+            "name": "hellish sergeant",
+            "howmany": "4"
         },
         {
             "name": "cryoreaver",
-            "howmany": "12"
+            "howmany": "33"
         },
         {
-            "name": "former guard",
-            "howmany": "12"
+            "name": "former CRI sergeant",
+            "howmany": "1"
         },
         {
             "name": "toxic reaver",
-            "howmany": "2"
+            "howmany": "1"
         },
         {
-            "name": "corrupted guard",
-            "howmany": "6"
+            "name": "former guard",
+            "howmany": "13"
         },
         {
             "name": "archreaver",
-            "howmany": "6"
-        },
-        {
-            "name": "former commando",
-            "howmany": "1"
-        },
-        {
-            "name": "cryoberos",
-            "howmany": "6"
-        },
-        {
-            "name": "corrupted commando",
-            "howmany": "6"
-        },
-        {
-            "name": "toxiberos",
-            "howmany": "1"
-        },
-        {
-            "name": "former CRI commando",
             "howmany": "2"
         },
         {
-            "name": "medusa",
+            "name": "former commando",
+            "howmany": "2"
+        },
+        {
+            "name": "cryoberos",
+            "howmany": "7"
+        },
+        {
+            "name": "corrupted commando",
+            "howmany": "7"
+        },
+        {
+            "name": "ravager",
             "howmany": "1"
         },
         {
             "name": "corrupted heavy",
-            "howmany": "6"
-        },
-        {
-            "name": "ravager",
-            "howmany": "3"
-        },
-        {
-            "name": "security drone",
-            "howmany": "17"
+            "howmany": "1"
         },
         {
             "name": "armored ravager",
-            "howmany": "8"
+            "howmany": "1"
         },
         {
-            "name": "combat drone",
-            "howmany": "4"
-        },
-        {
-            "name": "siege ravager",
-            "howmany": "3"
-        },
-        {
-            "name": "military drone",
-            "howmany": "4"
-        },
-        {
-            "name": "plasma ravager",
-            "howmany": "2"
-        },
-        {
-            "name": "fiend",
-            "howmany": "25"
+            "name": "security drone",
+            "howmany": "16"
         },
         {
             "name": "CRI marine",
-            "howmany": "9"
+            "howmany": "5"
         },
         {
-            "name": "fire fiend",
-            "howmany": "11"
+            "name": "combat drone",
+            "howmany": "3"
         },
         {
             "name": "CRI bot",
             "howmany": "3"
         },
         {
-            "name": "ice fiend",
-            "howmany": "31"
+            "name": "military drone",
+            "howmany": "2"
         }
     ],
     "traits": [
         {
-            "short_name": "Jug",
+            "short_name": "EE",
             "order": 1,
             "level": 1
         },
         {
-            "short_name": "Cov",
+            "short_name": "Skl",
             "order": 2,
             "level": 1
         },
         {
-            "short_name": "Pow",
+            "short_name": "Skl",
             "order": 3,
-            "level": 1
+            "level": 2
         },
         {
-            "short_name": "Tox",
+            "short_name": "Hr",
             "order": 4,
             "level": 1
         },
         {
-            "short_name": "SF",
+            "short_name": "Hor",
             "order": 5,
             "level": 1
         },
         {
-            "short_name": "Cov",
+            "short_name": "Hor",
             "order": 6,
             "level": 2
         },
         {
-            "short_name": "MEN",
+            "short_name": "MGH",
             "order": 7,
             "level": 1
         },
         {
-            "short_name": "Whk",
+            "short_name": "EnL",
             "order": 8,
             "level": 1
         },
         {
-            "short_name": "Hor",
+            "short_name": "SoG",
             "order": 9,
             "level": 1
         },
         {
-            "short_name": "Hor",
+            "short_name": "MGH",
             "order": 10,
             "level": 2
-        },
-        {
-            "short_name": "Hor",
-            "order": 11,
-            "level": 3
-        },
-        {
-            "short_name": "Jug",
-            "order": 12,
-            "level": 2
-        },
-        {
-            "short_name": "Jug",
-            "order": 13,
-            "level": 3
         }
     ],
     "equipment": [
         {
-            "name": "CRI plasma shotgun",
+            "name": "CRI plasma rifle",
             "slot": 1,
             "rarity": null,
             "mod_code": null,
             "perks": []
         },
         {
-            "name": "7.62 assault rifle",
+            "name": ".44 deagle",
             "slot": 2,
-            "rarity": " AV1",
-            "mod_code": "+A2",
+            "rarity": null,
+            "mod_code": "A",
             "perks": [
                 {
                     "name": "Calibrated",
                     "level": 1
                 },
                 {
-                    "name": "Auto-calibrated",
-                    "level": null
-                },
-                {
-                    "name": "Stabilized",
-                    "level": 1
-                },
-                {
                     "name": "Hunter",
-                    "level": 3
+                    "level": 6
+                },
+                {
+                    "name": "Unflinching aim",
+                    "level": null
                 }
             ]
         },
         {
-            "name": "katana",
+            "name": "12ga shotgun",
             "slot": 3,
-            "rarity": null,
-            "mod_code": "PBA",
+            "rarity": " AV2",
+            "mod_code": null,
             "perks": [
                 {
                     "name": "Ripper",
-                    "level": 5
+                    "level": 12
                 },
                 {
-                    "name": "Swap Harness",
-                    "level": null
-                },
-                {
-                    "name": "Mechabane",
-                    "level": null
+                    "name": "Molten",
+                    "level": 6
                 }
             ]
         },
         {
-            "name": "rocket launcher",
-            "slot": 4,
-            "rarity": null,
-            "mod_code": null,
-            "perks": []
-        },
-        {
-            "name": "duramesh scout armor",
+            "name": "combat armor",
             "slot": null,
-            "rarity": null,
-            "mod_code": "B",
+            "rarity": " AV3",
+            "mod_code": "A",
             "perks": [
                 {
-                    "name": "Fire-resistant",
+                    "name": "Swift",
                     "level": null
                 },
                 {
-                    "name": "Duramesh",
+                    "name": "Camoboost",
+                    "level": null
+                },
+                {
+                    "name": "Powered",
                     "level": null
                 }
             ]
@@ -373,23 +324,27 @@
         {
             "name": "auto AMP",
             "slot": null,
-            "rarity": " AV1",
+            "rarity": " AV3",
             "mod_code": null,
             "perks": [
                 {
-                    "name": "Auto accelerator",
+                    "name": "Automatic reloader",
+                    "level": null
+                },
+                {
+                    "name": "Auto booster",
                     "level": null
                 }
             ]
         },
         {
-            "name": "reaver's claw",
+            "name": "reaver's heart",
             "slot": null,
             "rarity": null,
             "mod_code": null,
             "perks": [
                 {
-                    "name": "Bloody Tears",
+                    "name": "Reaver's metabolism",
                     "level": null
                 }
             ]
@@ -398,51 +353,39 @@
     "inventory": [
         {
             "item": "energy cell",
-            "howmany": 94
+            "howmany": 79
         },
         {
-            "item": "rocket",
-            "howmany": 6
+            "item": "12ga shell",
+            "howmany": 50
         },
         {
-            "item": "7.62 ammo",
-            "howmany": 71
+            "item": ".44 ammo",
+            "howmany": 127
         },
         {
-            "item": "accuracy mod pack",
+            "item": "power mod pack",
             "howmany": 1
-        },
-        {
-            "item": "plasma grenade",
-            "howmany": 2
         },
         {
             "item": "gas grenade",
-            "howmany": 3
-        },
-        {
-            "item": "krak grenade",
             "howmany": 1
         },
         {
-            "item": "frag grenade",
-            "howmany": 1
+            "item": "EMP grenade",
+            "howmany": 4
         },
         {
-            "item": "CRI phase kit",
+            "item": "smoke grenade",
             "howmany": 3
         },
         {
             "item": "multitool",
-            "howmany": 3
+            "howmany": 2
         },
         {
-            "item": "military stimpack",
+            "item": "frozen heart",
             "howmany": 1
-        },
-        {
-            "item": "large medkit",
-            "howmany": 3
         },
         {
             "item": "red keycard",

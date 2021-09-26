@@ -22,6 +22,9 @@ class AwardSerializer(serializers.ModelSerializer):
     class Meta:
         model = md.Award
         fields = ['name']
+        extra_kwargs = {
+            'name': {'validators': []},
+        }
 class KlassSerializer(serializers.ModelSerializer):
     class Meta:
         model = md.Klass
@@ -83,7 +86,7 @@ class CharacterSerializer(serializers.ModelSerializer):
     
     @transaction.atomic
     def create(self, validated_data):
-        awards = validated_data.pop('award_set', [])
+        awards = validated_data.pop('awards', [])
         traits = validated_data.pop('charactertrait_set', [])
         kills = validated_data.pop('characterkill_set', [])
         visited_locations = validated_data.pop('characterlocation_set', [])
@@ -91,9 +94,9 @@ class CharacterSerializer(serializers.ModelSerializer):
         equipment = validated_data.pop('characterequipment_set', [])
         
         character = md.Character.objects.create(**validated_data)
-        #for award in awards:
-        #    award_obj = md.Award.objects.get()
-        #    character.awards.add(award)
+        for award in awards:
+            award_obj = md.Award.objects.get(name = award['name'])
+            character.awards.add(award_obj)
         try:
             for trait in traits:
                 md.CharacterTrait.objects.create(character=character, **trait)

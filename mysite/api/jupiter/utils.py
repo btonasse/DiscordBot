@@ -95,6 +95,12 @@ class MortemParser:
         # Convert dict to list
         data['visited_locations'] = list(data['visited_locations'].values())
 
+        awardpattern = re.compile(r'^  (.+?) \((\w+) ', re.MULTILINE)
+        award_groups = re.findall(awardpattern, self._mortem)
+        data['awards'] = []
+        for award in award_groups:
+            data['awards'].append({'name': award[0], 'typ': award[1]})
+
         totenemies = re.compile(r'He killed \d+ out of (\d+) enemies.')
         data['total_enemies'] = int(re.search(totenemies, self._mortem).groups()[0])
         
