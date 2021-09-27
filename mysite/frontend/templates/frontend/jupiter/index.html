@@ -1,61 +1,59 @@
 {% extends "frontend/base.html" %}
 {% block content %}
-    <div class="container mt-5">
-        <div class="row">
-            <h2>Jupiter Hell Characters</h2>
-        </div>
-        <div class="row mt-3">
-            <table class="table table-light table-striped table-hover">
-                <thead class="table">
-                    <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Class</th>
-                    <th scope="col">Difficulty</th>
-                    <th scope="col">Points</th>
-                    <th scope="col">Won</th>
-                    <th scope="col">Killed by</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for char in page_obj %}
-                    <tr>
-                        <td>{{ char.id }}</td>
-                        <td><a class="link-primary" href="/api/jupiter/characters/{{ char.id }}">{{ char.name }}</a></td>
-                        <td>{{ char.klass }}</td>
-                        <td>{{ char.difficulty }}</td>
-                        <td>{{ char.points }}</td>
-                        <td>{{ char.won }}</td>
-                        <td>{{ char.killed_by }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        <div class="row">
-            <div>
-                <ul class="pagination justify-content-end">
-                    {% if page_obj.has_previous %}
-                        <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
-                    {% else %}
-                        <li class="page-item disabled">
-                        <a class="page-link" href="#">&laquo;</a>
-                    {% endif %}
-                    </li>
-                    <li class="page-item active">
-                    <span class="page-link">{{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
-                    </li>
-                    {% if page_obj.has_next %}
-                        <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">&raquo;</a>
-                    {% else %}
-                        <li class="page-item disabled">
-                        <a class="page-link" href="#">&raquo;</a>
-                    {% endif %}
-                    </li>
-                </ul>
-            </div>
+    <div class="row">
+        <h2>Jupiter Hell Characters</h2>
+    </div>
+    <div class="row mt-3">
+        <table class="table table-light table-striped table-hover">
+            <thead class="table">
+                <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Class</th>
+                <th scope="col">Difficulty</th>
+                <th scope="col">Points</th>
+                <th scope="col">Won</th>
+                <th scope="col">Killed by</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for char in page_obj %}
+                <tr>
+                    <td>{{ char.id }}</td>
+                    <td><a class="link-primary" href="/api/jupiter/characters/{{ char.id }}">{{ char.name }}</a></td>
+                    <td>{{ char.klass }}</td>
+                    <td>{{ char.difficulty }}</td>
+                    <td>{{ char.points }}</td>
+                    <td>{{ char.won }}</td>
+                    <td>{{ char.killed_by }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <div>
+            <ul class="pagination justify-content-end">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+                {% else %}
+                    <li class="page-item disabled">
+                    <a class="page-link" href="#">&laquo;</a>
+                {% endif %}
+                </li>
+                <li class="page-item active">
+                <span class="page-link">{{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                </li>
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+                {% else %}
+                    <li class="page-item disabled">
+                    <a class="page-link" href="#">&raquo;</a>
+                {% endif %}
+                </li>
+            </ul>
         </div>
     </div>
 {% endblock content %}
