@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
+    path('', include('frontend.urls')),
     path('api/bg/', include('api.boardgames.urls')),
     path('api/jupiter/', include('api.jupiter.urls')),
     path('admin/', admin.site.urls),

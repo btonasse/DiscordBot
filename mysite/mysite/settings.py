@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'api.boardgames',
-    'api.jupiter'
+    'api.jupiter',
+    'frontend'
 ]
 
 MIDDLEWARE = [
