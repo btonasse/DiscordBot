@@ -1,0 +1,96 @@
+{% extends 'frontend/base.html' %}
+
+{% block content %}
+    {% load static %}
+    <div class="row">
+        <h2>Tax Calculator</h2>
+    </div>
+    <div class="row mt-3">
+        <div class="container w-50">
+            {% if errs %}
+                <div class="alert alert-dismissible alert-danger">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    <strong>Oops, something went wrong!</strong>
+                    {% for error in errs %}
+                        <p class="mb-0">{{error}}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header h2">Tax Calculator</div>
+                <div class="card-body">
+                    <div class="container">
+                        <form method="post" action="{% url 'taxcalc' %}" autocomplete="off" onsubmit="return validate();">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label class="form-label mt-4">Gross amount</label>
+                                        <div class="form-group">
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text">$</span>
+                                                <input id="gross_amt" name="gross_amt" type="text" class="form-control trace" aria-label="Gross amount" oninput="limitInput()">
+                                                <div class="invalid-feedback"><small>Only numbers!</small></div>                                            
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label class="form-label mt-4">Tax rate</label>
+                                        <div class="form-group">
+                                            <div class="input-group mb-3">
+                                                <input id="tax_rate" name="tax_rate" type="text" class="form-control trace" aria-label="Tax rate" oninput="limitInput()">
+                                                <span class="input-group-text">%</span>
+                                                <div class="invalid-feedback"><small>Only numbers between 0 and 100!</small></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label class="form-label mt-4">Net amount</label>
+                                        <div class="form-group">
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text">$</span>
+                                                <input id="net_amt" name="net_amt" type="text" class="form-control trace" aria-label="Net amount" oninput="limitInput()">
+                                                <div class="invalid-feedback"><small>Only numbers!</small></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label class="form-label mt-4">Tax amount</label>
+                                        <div class="form-group">
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text">$</span>
+                                                <input id="tax_amt" name="tax_amt" type="text" class="form-control trace" aria-label="Tax amount" oninput="limitInput()">
+                                                <div class="invalid-feedback"><small>Only numbers!</small></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <button type="submit" class="btn btn-primary">Calculate</button>
+                                <button type="button" class="btn btn-secondary" onclick="clearAll(this)">Clear</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="{% static 'frontend/taxcalc/taxcalc.js' %}"></script>
+    <script>
+        var tax_dict = {{ tax_dict | safe }}
+        var request_form = {{ request_form | safe }}
+        var all_inps = document.getElementsByClassName("trace")
+        for (var i=0; i < all_inps.length; i++) {
+            setInputAttrs(all_inps[i])
+        }
+    </script>
+{% endblock content %}
