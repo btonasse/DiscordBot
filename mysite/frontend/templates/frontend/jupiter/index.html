@@ -1,26 +1,36 @@
 {% extends "frontend/base.html" %}
 {% block content %}
-
-<table class="table table-hover">
-    <thead class="table-primary">
-        <tr>
-        <th scope="col">Id</th>
-        <th scope="col">Name</th>
-        <th scope="col">Class</th>
-        <th scope="col">Won</th>
-        <th scope="col">Points</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for char in characters.results %}
-        <tr>
-            <td>{{ char.id }}</td>
-            <td><a href="/api/jupiter/characters/{{ char.id }}">{{ char.name }}</a></td>
-            <td>{{ char.klass }}</td>
-            <td>{{ char.won }}</td>
-            <td>{{ char.points }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-    </table>
+    <div class="container mt-5">
+        <div class="row">
+            <h2>Jupiter Hell Characters</h2>
+        </div>
+        <div class="row mt-3">
+            <table class="table table-light table-striped table-hover">
+                <thead class="table">
+                    <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Class</th>
+                    <th scope="col">Difficulty</th>
+                    <th scope="col">Points</th>
+                    <th scope="col">Won</th>
+                    <th scope="col">Killed by</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for char in characters.results %}
+                    <tr>
+                        <td>{{ char.id }}</td>
+                        <td><a class="link-primary" href="/api/jupiter/characters/{{ char.id }}">{{ char.name }}</a></td>
+                        <td>{{ char.klass }}</td>
+                        <td>{{ char.difficulty }}</td>
+                        <td>{{ char.points }}</td>
+                        <td>{{ char.won }}</td>
+                        <td>{{ char.killed_by }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock content %}
