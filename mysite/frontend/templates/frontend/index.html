@@ -4,10 +4,6 @@
     <div>
         <h2>Content for My App</h2>
         <p>Stuff etc etc.</p>
-            <ul>
-            {% for char in characters.results %}
-                <li><a href="/api/jupiter/characters/{{ char.id }}">{{ char.name }}</a></li>
-            {% endfor %}
-            </ul>
+        <p><a href="{% url 'jupiter'%}">Test</a></p>
     </div>
 {% endblock content %}

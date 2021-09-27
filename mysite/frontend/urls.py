@@ -1,7 +1,8 @@
 from django.urls import path
-from frontend import views
+from frontend.views import home, jupiter
 
 urlpatterns = [
-    path('', views.index, name='index')    
+    path('', home.index, name='home'),    
+    path('jupiter', jupiter.index, name='jupiter')
 ]
 
