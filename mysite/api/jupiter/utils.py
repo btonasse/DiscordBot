@@ -104,11 +104,14 @@ class MortemParser:
         data['visited_locations'] = list(data['visited_locations'].values())
 
         awardpattern = re.compile(r'(?<=Awards\n).+(?=\nHe killed)', re.DOTALL)
-        award_lines = re.search(awardpattern, self._mortem)[0].splitlines()
         data['awards'] = []
-        for award in award_lines:
-            if not award.startswith('   *'):
-                data['awards'].append({'name': award.strip()})
+        try:
+            award_lines = re.search(awardpattern, self._mortem)[0].splitlines()
+            for award in award_lines:
+                if not award.startswith('   *'):
+                    data['awards'].append({'name': award.strip()})
+        except TypeError: #No matches
+            pass
 
         totenemies = re.compile(r'He killed \d+ out of (\d+) enemies.')
         data['total_enemies'] = int(re.search(totenemies, self._mortem).groups()[0])
