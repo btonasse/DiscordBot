@@ -1,5 +1,5 @@
 from django.db import models
-from datetime import datetime
+import django.utils.timezone as tz
 
 class Monster(models.Model):
     name = models.CharField(max_length=64, unique=True)
@@ -31,7 +31,6 @@ class Event(models.Model):
 
 class Award(models.Model):
     name = models.CharField(max_length=64, unique=True)
-    typ = models.CharField(max_length=20)
     description = models.TextField(blank=True)
     class Meta:
         ordering = ['name']    
@@ -107,8 +106,8 @@ class Character(models.Model):
     equipment = models.ManyToManyField(Equipment, through='CharacterEquipment', blank=True)
     inventory = models.ManyToManyField(Item, through='CharacterInventory', blank=True)
     visited_locations = models.ManyToManyField(Location, through='CharacterLocation')
-    last_modified = models.DateTimeField(default=datetime.now())
-    mortem_timestamp = models.DateTimeField(default=datetime.now())
+    last_modified = models.DateTimeField(default=tz.now)
+    mortem_timestamp = models.DateTimeField(default=tz.now)
     class Meta:
         ordering = ['name']
         constraints = [
