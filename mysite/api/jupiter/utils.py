@@ -71,8 +71,9 @@ class MortemParser:
         line4 = re.compile(r'He survived for (\d+) turns.')
         data['turns_survived'] = int(re.search(line4, self._mortem).groups()[0])
 
-        line5 = re.compile(r'The run time was (\d+)h (\d+)m (\d+)s.')
-        data['run_time'] = ':'.join(re.search(line5, self._mortem).groups())
+        line5 = re.compile(r'The run time was (?:(\d+)h )?(\d+)m (\d+)s.')
+        runtime_list = [grp or '00' for grp in re.search(line5, self._mortem).groups()]
+        data['run_time'] = ':'.join(runtime_list)
 
         line6 = re.compile(r'World seed was (\d+).')
         data['seed'] = int(re.search(line6, self._mortem).groups()[0])

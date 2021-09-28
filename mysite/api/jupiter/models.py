@@ -109,7 +109,8 @@ class Character(models.Model):
     last_modified = models.DateTimeField(default=tz.now)
     mortem_timestamp = models.DateTimeField(default=tz.now)
     class Meta:
-        ordering = ['name']
+        ordering = ['-mortem_timestamp']
+        get_latest_by = ['-mortem_timestamp']
         constraints = [
             models.constraints.UniqueConstraint(
                 fields = ['name', 'mortem_timestamp'],
