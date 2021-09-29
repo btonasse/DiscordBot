@@ -60,13 +60,17 @@ class MortemParser:
 
         line2 = re.compile(r'killed on (.+) by a (.+)\.')
         match = re.search(line2, self._mortem)
+        data['won'] = False
         if match:
-            data['won'] = False
             last_location, data['killed_by'] = match.groups()
-            
         else:
-            data['won'] = True
-            last_location = data['killed_by'] = None
+            suicide = re.search(r'commited suicide on (.+)\.', self._mortem)
+            if suicide:
+                last_location = suicide.groups()[0]
+                data['killed_by'] = 'suicide'
+            else:
+                data['won'] = True
+                last_location = data['killed_by'] = None
             
         line4 = re.compile(r'He survived for (\d+) turns.')
         data['turns_survived'] = int(re.search(line4, self._mortem).groups()[0])
