@@ -3,6 +3,32 @@ from pathlib import Path
 import json
 import os
 from datetime import datetime
+from dataclasses import dataclass, asdict
+from typing import List
+
+@dataclass(init=False)
+class Mortem:
+    name: str
+    level: str
+    klass: str
+    killed_by: str
+    won: bool
+    last_location: str
+    turns_survived: int
+    run_time: str
+    seed: int
+    points: int
+    difficulty: str
+    visited_locations: List[dict]
+    awards: list
+    total_enemies: int
+    kills: List[dict]
+    traits: List[dict]
+    equipment: List[dict]
+    inventory: List[dict]
+    mortem_timestamp: str
+
+
 class MortemParser:
     '''
     Parses a mortem.txt file generated after a Jupiter Hell run finishes
@@ -15,7 +41,7 @@ class MortemParser:
         self._mortem = None
         self._last_modified = None
         self._load_file()
-        self.data = dict()
+        self.data = Mortem()
 
     def _load_file(self) -> str:
         '''
@@ -52,91 +78,89 @@ class MortemParser:
         '''
         Parses mortem file and populates self.data with all necessary datapoints to create a new character instance
         '''
-        data = dict()
-
         line1 = re.compile(r'(.+), level (\d+) (.+),')
-        data['name'], data['level'], data['klass'] = re.search(line1, self._mortem).groups()
-        data['level'] = int(data['level'])
+        self.data.name, self.data.level, self.data.klass = re.search(line1, self._mortem).groups()
+        self.data.level = int(self.data.level)
 
-        line2 = re.compile(r'^(?:(?:killed on)|(?:commited suicide on)) (.+?)(?: by a (.+)\.|\.)$')
+        line2 = re.compile(r'^(?:(?:killed on)|(?:commited suicide on)) (.+?)(?: by a (.+)\.|\.)$', re.MULTILINE)
         match = re.search(line2, self._mortem)
-        last_location, data['killed_by'] = match.groups()
-        if data['killed_by']:
-            data['won'] = False
+        self.data.last_location, self.data.killed_by = match.groups()
+        if self.data.killed_by:
+            self.data.won = False
         else:
-            data['won'] = True
+            self.data.won = True
             
         line4 = re.compile(r'He survived for (\d+) turns.')
-        data['turns_survived'] = int(re.search(line4, self._mortem).groups()[0])
+        self.data.turns_survived = int(re.search(line4, self._mortem).groups()[0])
 
         line5 = re.compile(r'The run time was (?:(\d+)h )?(\d+)m (\d+)s.')
         runtime_list = [grp or '00' for grp in re.search(line5, self._mortem).groups()]
-        data['run_time'] = ':'.join(runtime_list)
+        self.data.run_time = ':'.join(runtime_list)
 
         line6 = re.compile(r'World seed was (\d+).')
-        data['seed'] = int(re.search(line6, self._mortem).groups()[0])
+        self.data.seed = int(re.search(line6, self._mortem).groups()[0])
 
         line7 = re.compile(r'He scored (\d+) points.')
-        data['points'] = int(re.search(line7, self._mortem).groups()[0])
+        self.data.points = int(re.search(line7, self._mortem).groups()[0])
 
         line8 = re.compile(r'He took (.+) risks.')
-        data['difficulty'] = re.search(line8, self._mortem).groups()[0][0]
+        self.data.difficulty = re.search(line8, self._mortem).groups()[0][0]
 
         locpattern = re.compile(r'^(\w+(?: \w+)*) -(.*)$', re.MULTILINE)
         loc_groups = re.findall(locpattern, self._mortem)
-        data['visited_locations'] = dict()
+        visited_locations = dict()
         order = 0
         for grp in loc_groups:
             left = grp[0].strip()
             right = grp[1].strip()
-            if left not in data['visited_locations']:
+            if left not in visited_locations:
                 order += 1
-                data['visited_locations'][left] = {'name': left, 'order': order, 'event': None}
+                visited_locations[left] = {'name': left, 'order': order, 'event': None}
             if right.startswith('>'):
                 order += 1
-                data['visited_locations'][right[1:].strip()] = {'name': right[1:].strip(), 'order': order, 'event': None}
+                visited_locations[right[1:].strip()] = {'name': right[1:].strip(), 'order': order, 'event': None}
             else:
-                data['visited_locations'][left]['event'] = right
-        if last_location and last_location not in data['visited_locations']:
-            data['visited_locations'][last_location] = {'name': last_location, 'order': order+1, 'event': None}
+                visited_locations[left]['event'] = right
+        if self.data.last_location and self.data.last_location not in visited_locations:
+            visited_locations[self.data.last_location] = {'name': self.data.last_location, 'order': order+1, 'event': None}
         # Convert dict to list
-        data['visited_locations'] = list(data['visited_locations'].values())
+        self.data.visited_locations = list(visited_locations.values())
 
         awardpattern = re.compile(r'(?<=Awards\n).+(?=\nHe killed)', re.DOTALL)
-        data['awards'] = []
+        self.data.awards = []
         try:
             award_lines = re.search(awardpattern, self._mortem)[0].splitlines()
             for award in award_lines:
                 if not award.startswith('   *'):
-                    data['awards'].append({'name': award.strip()})
+                    self.data.awards.append({'name': award.strip()})
         except TypeError: #No matches
             pass
 
         totenemies = re.compile(r'He killed \d+ out of (\d+) enemies.')
-        data['total_enemies'] = int(re.search(totenemies, self._mortem).groups()[0])
+        self.data.total_enemies = int(re.search(totenemies, self._mortem).groups()[0])
         
         killpattern = re.compile(r'(?:^ |\s{3})(\d+)\s{1,2}(\w+(?: \w+)*)', re.MULTILINE)
         kill_groups = re.findall(killpattern, self._mortem)
-        data['kills'] = []
+        self.data.kills = []
         for grp in kill_groups:
             monster_name = self.convert_to_singular(grp[1])
-            data['kills'].append({'name': monster_name, 'howmany': grp[0]})
+            self.data.kills.append({'name': monster_name, 'howmany': grp[0]})
 
         traitpattern = re.compile(r'(?<=^  |->)*?(\w+)(?=->|\n\nEquipment)', re.MULTILINE)
         traits_list = re.findall(traitpattern, self._mortem)
         # Convert list to deserializable list of dicts
-        data['traits'] = []
+        self.data.traits = []
         traits_count = dict()
         for trait in traits_list:
             if trait not in traits_count:
                 traits_count[trait] = 1
             else:
                 traits_count[trait] += 1
-            data['traits'].append({'short_name': trait, 'order': len(data['traits'])+1, 'level': traits_count[trait]})
+            self.data.traits.append({'short_name': trait, 'order': len(self.data.traits)+1, 'level': traits_count[trait]})
 
         equipattern = re.compile(r'(?:^  Slot #|^  )(\d|Body|Head|Utility|Relic) +:( AV1| AV2| AV3)? ?(\S+(?: [^ \+ABP]+| AMP)*) ?([\+ABP\d]+)?\n((?:   \* )(?:.+\n)+)?', re.MULTILINE)
         equip_lines = re.findall(equipattern, self._mortem)
-        data['equipment'] = []
+        self.data.equipment = []
         for line in equip_lines:
             if all(char in '0123456789' for char in line[0]):
                 slot = int(line[0])
@@ -159,7 +183,7 @@ class MortemParser:
                         level = None
                         name = ' '.join(split_name)
                     perks.append({'name': name, 'level': level})
-            data['equipment'].append({'name': equip_name, 'slot': slot, 'rarity': rarity, 'mod_code': mod_code, 'perks': perks})
+            self.data.equipment.append({'name': equip_name, 'slot': slot, 'rarity': rarity, 'mod_code': mod_code, 'perks': perks})
 
         invpattern = re.compile(r'(?<=Inventory\n)(.+)', re.DOTALL)
         inv_lines = re.search(invpattern, self._mortem).groups()[0].splitlines()
@@ -174,16 +198,15 @@ class MortemParser:
             except IndexError:
                 inventory[split_line[0]] += 1 # There is no count for this inventory line
         # convert dict to deserializable format
-        data['inventory'] = [{'item': k, 'howmany': v} for k,v in inventory.items()]
+        self.data.inventory = [{'item': k, 'howmany': v} for k,v in inventory.items()]
 
         # add file creation timestamp
-        data['mortem_timestamp'] = datetime.strftime(self._last_modified, '%Y-%m-%dT%H:%M:%S%z')
+        self.data.mortem_timestamp = datetime.strftime(self._last_modified, '%Y-%m-%dT%H:%M:%S%z')
         
-        self.data = data
-        return data
+        return self.data
         
 if __name__ == '__main__':
     import json
     x = MortemParser()
     data = x.parse()
-    print(json.dumps(data, indent=4))
+    print(json.dumps(asdict(data), indent=4))
