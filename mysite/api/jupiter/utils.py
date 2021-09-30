@@ -205,10 +205,10 @@ class MortemParser:
         # add file creation timestamp
         self.data.mortem_timestamp = datetime.strftime(self._last_modified, '%Y-%m-%dT%H:%M:%S%z')
         
-        return self.data
+        return asdict(self.data)
         
 if __name__ == '__main__':
     import json
     x = MortemParser()
     data = x.parse()
-    print(json.dumps(asdict(data), indent=4))
+    print(json.dumps(data, indent=4))
