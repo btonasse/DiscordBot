@@ -13,7 +13,6 @@ class Mortem:
     klass: str
     killed_by: str
     won: bool
-    last_location: str
     turns_survived: int
     run_time: str
     seed: int
@@ -84,10 +83,13 @@ class MortemParser:
 
         line2 = re.compile(r'^(?:(?:killed on)|(?:commited suicide on)) (.+?)(?: by a (.+)\.|\.)$', re.MULTILINE)
         match = re.search(line2, self._mortem)
-        self.data.last_location, self.data.killed_by = match.groups()
-        if self.data.killed_by:
+        if match:
             self.data.won = False
+            last_location = match.groups()[0]
+            self.data.killed_by = match.groups()[1] or 'suicide'
         else:
+            self.data.killed_by = None
+            last_location = 'Dante Altar'
             self.data.won = True
             
         line4 = re.compile(r'He survived for (\d+) turns.')
@@ -121,8 +123,8 @@ class MortemParser:
                 visited_locations[right[1:].strip()] = {'name': right[1:].strip(), 'order': order, 'event': None}
             else:
                 visited_locations[left]['event'] = right
-        if self.data.last_location and self.data.last_location not in visited_locations:
-            visited_locations[self.data.last_location] = {'name': self.data.last_location, 'order': order+1, 'event': None}
+        if last_location and last_location not in visited_locations:
+            visited_locations[last_location] = {'name': last_location, 'order': order+1, 'event': None}
         # Convert dict to list
         self.data.visited_locations = list(visited_locations.values())
 
