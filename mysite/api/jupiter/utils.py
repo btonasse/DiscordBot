@@ -81,16 +81,17 @@ class MortemParser:
         self.data.name, self.data.level, self.data.klass = re.search(line1, self._mortem).groups()
         self.data.level = int(self.data.level)
 
-        line2 = re.compile(r'^(?:(?:killed on)|(?:commited suicide on)) (.+?)(?: by a (.+)\.|\.)$', re.MULTILINE)
+        line2 = re.compile(r'^(killed on|commited suicide on|defeated the Harbinger) (.+?)(?: by a (.+)\.|\.)$', re.MULTILINE)
         match = re.search(line2, self._mortem)
-        if match:
-            self.data.won = False
-            last_location = match.groups()[0]
-            self.data.killed_by = match.groups()[1] or 'suicide'
-        else:
-            self.data.killed_by = None
-            last_location = 'Dante Altar'
+        if match.groups()[0] == 'defeated the Harbinger':
             self.data.won = True
+            last_location = 'Dante Altar'
+            self.data.killed_by = None
+            
+        else:
+            self.data.killed_by = match.groups()[2] or 'suicide'
+            last_location = match.groups()[1]
+            self.data.won = False
             
         line4 = re.compile(r'He survived for (\d+) turns.')
         self.data.turns_survived = int(re.search(line4, self._mortem).groups()[0])
