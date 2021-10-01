@@ -76,7 +76,7 @@ class CharacterEquipmentSerializer(serializers.ModelSerializer):
 
 class CharacterSerializer(serializers.ModelSerializer): 
     klass = serializers.SlugRelatedField(queryset=md.Klass.objects.all(), slug_field='name')
-    killed_by = serializers.SlugRelatedField(queryset=md.Monster.objects.all(), slug_field='name')
+    killed_by = serializers.SlugRelatedField(queryset=md.Monster.objects.all(), slug_field='name', allow_null=True)
     awards = AwardSerializer(many=True, required=False)
     traits = CharacterTraitSerializer(source='charactertrait_set', many=True)
     kills = CharacterKillSerializer(source='characterkill_set', many=True)
