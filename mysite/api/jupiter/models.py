@@ -1,6 +1,12 @@
 from django.db import models
 import django.utils.timezone as tz
 
+class Challenge(models.Model):
+    name = models.CharField(max_length=64, unique=True)
+    class Meta:
+        ordering = ['name']    
+    def __str__(self):
+        return self.name
 class Monster(models.Model):
     name = models.CharField(max_length=64, unique=True)
     class Meta:
@@ -99,6 +105,7 @@ class Character(models.Model):
     seed = models.IntegerField()
     points = models.IntegerField()
     difficulty = models.CharField(choices=Difficulty.choices, max_length=1)
+    challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE, default=None, null=True)
     total_enemies = models.IntegerField()
     awards = models.ManyToManyField(Award, blank=True)
     traits = models.ManyToManyField(Trait, through='CharacterTrait', blank=True)

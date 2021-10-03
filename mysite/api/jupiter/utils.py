@@ -18,6 +18,7 @@ class Mortem:
     seed: int
     points: int
     difficulty: str
+    challenge: str
     visited_locations: List[dict]
     awards: list
     total_enemies: int
@@ -108,6 +109,11 @@ class MortemParser:
 
         line8 = re.compile(r'(EASY|MEDIUM|HARD|ULTRAVIOLENCE|NIGHTMARE)')
         self.data.difficulty = re.search(line8, self._mortem).groups()[0][0]
+
+        challengepat = re.compile(r'(Angel of Light Travel)')
+        challenge = re.search(challengepat, self._mortem)
+        if challenge:
+            self.data.challenge = challenge.groups()[0]
 
         locpattern = re.compile(r'^(\w+(?: \w+)*) -(.*)$', re.MULTILINE)
         loc_groups = re.findall(locpattern, self._mortem)
