@@ -25,6 +25,7 @@ class AwardSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'name': {'validators': []},
         }
+
 class KlassSerializer(serializers.ModelSerializer):
     class Meta:
         model = md.Klass
@@ -96,8 +97,11 @@ class CharacterSerializer(serializers.ModelSerializer):
         
         character = md.Character.objects.create(**validated_data)
         for award in awards:
-            award_obj = md.Award.objects.get(name = award['name'])
-            character.awards.add(award_obj)
+            try:
+                award_obj = md.Award.objects.get(name = award['name'])
+                character.awards.add(award_obj)
+            except md.Award.DoesNotExist:
+                raise serializers.ValidationError(f"Award does not exist: {award['name']}")
         try:
             for trait in traits:
                 md.CharacterTrait.objects.create(character=character, **trait)
