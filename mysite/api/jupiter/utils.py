@@ -110,7 +110,7 @@ class MortemParser:
         line8 = re.compile(r'(EASY|MEDIUM|HARD|ULTRAVIOLENCE|NIGHTMARE)')
         self.data.difficulty = re.search(line8, self._mortem).groups()[0][0]
 
-        challengepat = re.compile(r'(Angel of (?:.+))!$', re.MULTILINE)
+        challengepat = re.compile(r'^He was a(?:(?:n )|(?: paragon of ))([\s\w]+)', re.MULTILINE)
         challenge = re.search(challengepat, self._mortem)
         if challenge:
             self.data.challenge = challenge.groups()[0]
