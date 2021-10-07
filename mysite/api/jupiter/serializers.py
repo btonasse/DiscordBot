@@ -25,6 +25,13 @@ class AwardSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'name': {'validators': []},
         }
+class EffectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = md.Effect
+        fields = ['name']
+        extra_kwargs = {
+            'name': {'validators': []},
+        }
 
 class KlassSerializer(serializers.ModelSerializer):
     class Meta:
@@ -80,6 +87,7 @@ class CharacterSerializer(serializers.ModelSerializer):
     killed_by = serializers.SlugRelatedField(queryset=md.Monster.objects.all(), slug_field='name', allow_null=True)
     challenge = serializers.SlugRelatedField(queryset=md.Challenge.objects.all(), slug_field='name', allow_null=True)
     awards = AwardSerializer(many=True, required=False)
+    effects = EffectSerializer(many=True, required=False)
     traits = CharacterTraitSerializer(source='charactertrait_set', many=True)
     kills = CharacterKillSerializer(source='characterkill_set', many=True)
     visited_locations = CharacterLocationSerializer(source='characterlocation_set', many=True)
@@ -89,6 +97,7 @@ class CharacterSerializer(serializers.ModelSerializer):
     @transaction.atomic
     def create(self, validated_data):
         awards = validated_data.pop('awards', [])
+        effects = validated_data.pop('effects', [])
         traits = validated_data.pop('charactertrait_set', [])
         kills = validated_data.pop('characterkill_set', [])
         visited_locations = validated_data.pop('characterlocation_set', [])
@@ -102,6 +111,12 @@ class CharacterSerializer(serializers.ModelSerializer):
                 character.awards.add(award_obj)
             except md.Award.DoesNotExist:
                 raise serializers.ValidationError(f"Award does not exist: {award['name']}")
+        for effect in effects:
+            try:
+                effect_obj = md.Effect.objects.get(name = effect['name'])
+                character.effects.add(effect_obj)
+            except md.Effect.DoesNotExist:
+                raise serializers.ValidationError(f"Effect does not exist: {effect['name']}")
         try:
             for trait in traits:
                 md.CharacterTrait.objects.create(character=character, **trait)
@@ -145,7 +160,8 @@ class CharacterSerializer(serializers.ModelSerializer):
             'traits',
             'kills',
             'equipment',
-            'inventory'
+            'inventory',
+            'effects'
         ]
         validators = [
             validators.UniqueTogetherValidator(

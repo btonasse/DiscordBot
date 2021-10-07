@@ -26,6 +26,7 @@ class Mortem:
     traits: List[dict]
     equipment: List[dict]
     inventory: List[dict]
+    effects: list
     mortem_timestamp: str
 
 
@@ -146,6 +147,8 @@ class MortemParser:
                     self.data.awards.append({'name': award.strip()})
         except TypeError: #No matches
             pass
+
+        # Add effects here...
 
         totenemies = re.compile(r'He killed \d+ out of (\d+) enemies.')
         self.data.total_enemies = int(re.search(totenemies, self._mortem).groups()[0])
