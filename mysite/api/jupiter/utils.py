@@ -148,7 +148,14 @@ class MortemParser:
         except TypeError: #No matches
             pass
 
-        # Add effects here...
+        effectspattern = re.compile(r'(?<=Permanents\n).+(?=\nInventory)', re.DOTALL)
+        self.data.effects = []
+        try:
+            effects_lines = re.search(effectspattern, self._mortem)[0].splitlines()
+            for effect in effects_lines:
+                self.data.effects.append({'name': effect.strip()})
+        except TypeError: #No matches
+            pass
 
         totenemies = re.compile(r'He killed \d+ out of (\d+) enemies.')
         self.data.total_enemies = int(re.search(totenemies, self._mortem).groups()[0])
