@@ -8,6 +8,7 @@ discord = "*"
 django = "*"
 djangorestframework = "*"
 requests = "*"
+django-debug-toolbar = "*"
 
 [dev-packages]
 
