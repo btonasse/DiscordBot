@@ -108,7 +108,7 @@ class MortemParser:
         line7 = re.compile(r'He scored (\d+) points.')
         self.data.points = int(re.search(line7, self._mortem).groups()[0])
 
-        line8 = re.compile(r'(EASY|MEDIUM|HARD|ULTRAVIOLENCE|NIGHTMARE)')
+        line8 = re.compile(r'(EASY|MEDIUM|HARD|ULTRAVIOLENT|NIGHTMARE)')
         self.data.difficulty = re.search(line8, self._mortem).groups()[0][0]
 
         challengepat = re.compile(r'^He was a(?:(?:n )|(?: paragon of ))([\s\w]+)', re.MULTILINE)
