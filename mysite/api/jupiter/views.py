@@ -4,16 +4,25 @@ import api.jupiter.serializers as ser
 from api.jupiter.utils import MortemParser
 
 class CharactersView(generics.ListCreateAPIView):
-    queryset = md.Character.objects.all()
+    queryset = md.Character.objects.all().select_related(
+        'killed_by', 'klass', 'challenge').prefetch_related(
+            'awards', 'effects', 'characterlocation_set__location', 'charactertrait_set__trait', 'characterkill_set__monster', 'characterinventory_set__item', 'characterequipment_set__equipmentperk_set__perk', 'characterequipment_set__equipment'
+        )
     serializer_class = ser.CharacterSerializer
 
 class CharacterView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = md.Character.objects.all()
+    queryset = md.Character.objects.all().select_related(
+        'killed_by', 'klass', 'challenge').prefetch_related(
+            'awards', 'effects', 'characterlocation_set__location', 'charactertrait_set__trait', 'characterkill_set__monster', 'characterinventory_set__item', 'characterequipment_set__equipmentperk_set__perk', 'characterequipment_set__equipment'
+        )
     serializer_class = ser.CharacterSerializer
     lookup_field = 'id'
 
 class CreateCharFromMortem(generics.CreateAPIView):
-    queryset = md.Character.objects.all()
+    queryset = md.Character.objects.all().select_related(
+        'killed_by', 'klass', 'challenge').prefetch_related(
+            'awards', 'effects', 'characterlocation_set__location', 'charactertrait_set__trait', 'characterkill_set__monster', 'characterinventory_set__item', 'characterequipment_set__equipmentperk_set__perk', 'characterequipment_set__equipment'
+        )
     serializer_class = ser.CharacterSerializer
     def create(self, request, *args, **kwargs):
         parser = MortemParser()
