@@ -83,9 +83,9 @@ class CharacterEquipmentSerializer(serializers.ModelSerializer):
         fields = ['name', 'slot', 'rarity', 'mod_code', 'perks']
 
 class CharacterSerializer(serializers.ModelSerializer): 
-    klass = serializers.SlugRelatedField(queryset=md.Klass.objects.all(), slug_field='name')
-    killed_by = serializers.SlugRelatedField(queryset=md.Monster.objects.all(), slug_field='name', allow_null=True)
-    challenge = serializers.SlugRelatedField(queryset=md.Challenge.objects.all(), slug_field='name', allow_null=True)
+    klass = serializers.SlugRelatedField(read_only=True, slug_field='name')
+    killed_by = serializers.SlugRelatedField(read_only=True, slug_field='name', allow_null=True)
+    challenge = serializers.SlugRelatedField(read_only=True, slug_field='name', allow_null=True)
     awards = AwardSerializer(many=True, required=False)
     effects = EffectSerializer(many=True, required=False)
     traits = CharacterTraitSerializer(source='charactertrait_set', many=True)
