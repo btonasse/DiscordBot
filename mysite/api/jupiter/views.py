@@ -17,10 +17,13 @@ class BaseCharacterView(generics.GenericAPIView):
                 Prefetch('equipmentperk_set', queryset=md.EquipmentPerk.objects.select_related('perk'))
             ))
         )
-    serializer_class = ser.CharacterSerializer
+    def get_serializer_class(self):
+        if self.request._request.method == 'GET':
+            return ser.CharSerializerReadonly
+        return ser.CharacterSerializer
     
 class CharactersView(generics.ListCreateAPIView, BaseCharacterView):
-    serializer_class = ser.CharSerializerReadonly
+    pass
 
 class CharacterView(generics.RetrieveUpdateDestroyAPIView, BaseCharacterView):
     lookup_field = 'id'
