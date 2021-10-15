@@ -20,7 +20,7 @@ class BaseCharacterView(generics.GenericAPIView):
     serializer_class = ser.CharacterSerializer
     
 class CharactersView(generics.ListCreateAPIView, BaseCharacterView):
-    pass
+    serializer_class = ser.CharSerializerReadonly
 
 class CharacterView(generics.RetrieveUpdateDestroyAPIView, BaseCharacterView):
     lookup_field = 'id'

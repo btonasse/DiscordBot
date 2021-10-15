@@ -11,6 +11,7 @@ class Mortem:
     name: str
     level: str
     klass: str
+    fated: bool
     killed_by: str
     won: bool
     turns_survived: int
@@ -107,6 +108,11 @@ class MortemParser:
 
         line7 = re.compile(r'He scored (\d+) points.')
         self.data.points = int(re.search(line7, self._mortem).groups()[0])
+
+        fatedpattern = re.compile(r'(Random Number Gods)')
+        self.data.fated = False
+        if re.search(fatedpattern, self._mortem):
+            self.data.fated = True
 
         line8 = re.compile(r'(EASY|MEDIUM|HARD|ULTRAVIOLENT|NIGHTMARE)')
         self.data.difficulty = re.search(line8, self._mortem).groups()[0][0]

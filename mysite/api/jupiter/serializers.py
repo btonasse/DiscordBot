@@ -83,9 +83,9 @@ class CharacterEquipmentSerializer(serializers.ModelSerializer):
         fields = ['name', 'slot', 'rarity', 'mod_code', 'perks']
 
 class CharacterSerializer(serializers.ModelSerializer): 
-    klass = serializers.SlugRelatedField(read_only=True, slug_field='name')
-    killed_by = serializers.SlugRelatedField(read_only=True, slug_field='name', allow_null=True)
-    challenge = serializers.SlugRelatedField(read_only=True, slug_field='name', allow_null=True)
+    klass = serializers.SlugRelatedField(queryset=md.Klass.objects.all(), slug_field='name')
+    killed_by = serializers.SlugRelatedField(queryset=md.Monster.objects.all(), slug_field='name', allow_null=True)
+    challenge = serializers.SlugRelatedField(queryset=md.Challenge.objects.all(), slug_field='name', allow_null=True)
     awards = AwardSerializer(many=True, required=False)
     effects = EffectSerializer(many=True, required=False)
     traits = CharacterTraitSerializer(source='charactertrait_set', many=True)
@@ -150,6 +150,7 @@ class CharacterSerializer(serializers.ModelSerializer):
             'run_time',
             'seed',
             'points',
+            'fated',
             'difficulty',
             'challenge',
             'total_enemies',
@@ -170,6 +171,11 @@ class CharacterSerializer(serializers.ModelSerializer):
                 message='This character is not unique (name and mortem_timestamp are not unique together)'
             )
         ]
+
+class CharSerializerReadonly(CharacterSerializer):
+    klass = serializers.SlugRelatedField(read_only=True, slug_field='name')
+    killed_by = serializers.SlugRelatedField(read_only=True, slug_field='name', allow_null=True)
+    challenge = serializers.SlugRelatedField(read_only=True, slug_field='name', allow_null=True)
 
 '''
 class PerksRelatedField(serializers.RelatedField):

@@ -111,6 +111,7 @@ class Character(models.Model):
     run_time = models.DurationField()
     seed = models.IntegerField()
     points = models.IntegerField()
+    fated = models.BooleanField(default=False)
     difficulty = models.CharField(choices=Difficulty.choices, max_length=1)
     challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE, default=None, blank=True, null=True)
     total_enemies = models.IntegerField()
