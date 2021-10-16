@@ -1,16 +1,15 @@
 from django.shortcuts import render
-from django.core.paginator import Paginator
 import requests
 
 BASE_URL = 'http://127.0.0.1:8000'
 
 def index(request):
-    resp = requests.get(f"{BASE_URL}/api/jupiter/characters")
+    pagenum = request.GET.get('page', 1)
+    resp = requests.get(f"{BASE_URL}/api/jupiter/characters?page={pagenum}")
     data = resp.json()
-    p = Paginator(data, 50)
     context = {
-        'characters': data,
-        'page_obj': p.get_page(request.GET.get('page'))
-        }
+        'characters': data.pop('results'),
+        'pagination': data
+    }
     
     return render(request, 'frontend/jupiter/index.html', context)

@@ -18,7 +18,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for char in page_obj %}
+                {% for char in characters %}
                 <tr>
                     <td>{{ char.id }}</td>
                     <td><a class="link-primary" href="/api/jupiter/characters/{{ char.id }}">{{ char.name }}</a></td>
@@ -38,20 +38,20 @@
     <div class="row">
         <div>
             <ul class="pagination justify-content-end">
-                {% if page_obj.has_previous %}
+                {% if pagination.previous_page %}
                     <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+                    <a class="page-link" href="?page={{ pagination.previous_page }}">&laquo;</a>
                 {% else %}
                     <li class="page-item disabled">
                     <a class="page-link" href="#">&laquo;</a>
                 {% endif %}
                 </li>
                 <li class="page-item active">
-                <span class="page-link">{{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                <span class="page-link">{{ pagination.current_page }} of {{ pagination.last_page }}</span>
                 </li>
-                {% if page_obj.has_next %}
+                {% if pagination.next_page %}
                     <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+                    <a class="page-link" href="?page={{ pagination.next_page }}">&raquo;</a>
                 {% else %}
                     <li class="page-item disabled">
                     <a class="page-link" href="#">&raquo;</a>
