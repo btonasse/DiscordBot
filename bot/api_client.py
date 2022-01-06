@@ -1,7 +1,7 @@
 import requests
 import os
 
-ROOT = (f"{os.getenv('DB_HOST')}/api")
+ROOT = (f"{os.getenv('DB_HOST')}/api/bg")
 
 class ApiClient():
     def __init__(self):
