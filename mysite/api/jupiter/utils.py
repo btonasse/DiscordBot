@@ -56,7 +56,8 @@ class MortemParser:
             raise ValueError('Only txt files accepted.')
         with self._filepath.open('r') as file:
             content = file.read()
-        self._mortem = content
+        # Fix bug in mortem.txt for CRI grenadiers
+        self._mortem = content.replace('CRI  grenadiers', 'CRI grenadiers ')
         self._last_modified = datetime.fromtimestamp(self._filepath.stat().st_mtime)
 
 
@@ -234,6 +235,7 @@ class MortemParser:
         
 if __name__ == '__main__':
     import json
-    x = MortemParser()
+    path = "D:\\SteamD\\steamapps\\common\\Jupiter Hell\\mortem.txt"
+    x = MortemParser(path)
     data = x.parse()
     print(json.dumps(data, indent=4))
