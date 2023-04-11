@@ -15,7 +15,6 @@
       "cwd": "./mysite",
       "execute": true,
       "commands": [
-        "deactivate",
         "pipenv run manage.py runserver"
       ]
     }
