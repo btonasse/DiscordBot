@@ -5,7 +5,6 @@
       "name": "bot",
       "description": "Discord bot",
       "commands": [
-        "deactivate",
         "pipenv run python -m bot"
       ]
     },
