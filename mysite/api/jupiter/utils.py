@@ -123,6 +123,8 @@ class MortemParser:
         challenge = re.search(challengepat, self._mortem)
         if challenge:
             self.data.challenge = challenge.groups()[0]
+        elif re.compile(r"^He fought in the Arena", re.MULTILINE):
+            self.data.challenge = "Arena"
         else:
             self.data.challenge = None
 
